@@ -50,10 +50,10 @@ export default function HomeScreen() {
                 <Watchlist data={watchlist} />
 
                 {/* Trending Films Carousel */}
-                <TrendingFilms data={trending} />
+                <TrendingFilms title="Trending" data={trending} />
 
                 {/* Top Rated Films Carousel */}
-                <TrendingFilms data={topRated} />
+                <TrendingFilms title="Top Rated" data={topRated} />
 
             </ScrollView>
         </View>
