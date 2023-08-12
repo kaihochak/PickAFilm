@@ -40,7 +40,7 @@ export default function HomeScreen() {
             {/* Film List */}
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{paddingBottom: 100}}
+                contentContainerStyle={{paddingBottom: 10}}
             >
                 {/* Trending Films Carousel */}
                 <TrendingFilms data={trending} />
