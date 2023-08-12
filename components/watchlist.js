@@ -5,14 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 
 var {width, height} = Dimensions.get('window');
 
-export default function TrendingFilms({data}) {
+export default function Watchlist({data}) {
     const navigation = useNavigation();
     const handleClick = () => {
         navigation.navigate('Film', item);
     }
     return (
         <View className=" mb-8">
-            <Text className="text-white text-xl mx-4 mb-5">Trending</Text>
+            <Text className="text-white text-xl mx-4 mb-5">Watchlist</Text>
             <Carousel
                 data={data}
                 renderItem={({item}) => <FilmCard item={item} handleClick={handleClick}/>}
