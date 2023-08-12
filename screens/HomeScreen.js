@@ -4,10 +4,15 @@ import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { styles } from '../theme';
+import TrendingFilms from '../components/trendingFilms';
+import { useState } from 'react';
 
 const ios = Platform.OS === 'ios';
 
 export default function HomeScreen() {
+    
+    const [trending, setTrending] = useState([1,2,3]); 
+
     return (
         <View className="flex-1 bg-neutral-800" >
             {/* search bar and logo */}
@@ -38,6 +43,7 @@ export default function HomeScreen() {
                 contentContainerStyle={{paddingBottom: 100}}
             >
                 {/* Trending Films Carousel */}
+                <TrendingFilms data={trending} />
             </ScrollView>
         </View>
     )
