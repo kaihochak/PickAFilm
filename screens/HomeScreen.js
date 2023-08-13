@@ -18,6 +18,7 @@ export default function HomeScreen() {
     const [watchlist, setWatch] = useState([1,2,3]); 
     const [trending, setTrending] = useState([1,2,3]); 
     const [topRated, settopRated] = useState([1,2,3]); 
+    const navigation = useNavigation();  
 
     return (
         <View className="flex-1 bg-neutral-800" >
@@ -37,7 +38,7 @@ export default function HomeScreen() {
                     </Text>
 
                     {/* Search */}
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=> navigation.navigate('Search')}>
                         <MagnifyingGlassIcon size="30" strokeWidth={2} color="white" />
                     </TouchableOpacity>
 
