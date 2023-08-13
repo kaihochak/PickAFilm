@@ -7,7 +7,7 @@ var {width, height} = Dimensions.get('window');
 
 export default function Watchlist({data}) {
     const navigation = useNavigation();
-    const handleClick = () => {
+    const handleClick = (item) => {
         navigation.navigate('Film', item);
     }
     return (
@@ -29,7 +29,7 @@ export default function Watchlist({data}) {
 
 const FilmCard = ({item, handleClick}) => {
     return (
-        <TouchableWithoutFeedback onPress={handleClick}>
+        <TouchableWithoutFeedback onPress={()=> handleClick(item)}>
             <Image 
                 source={require('../assets/images/poster1.jpg')}
                 style={{

@@ -6,9 +6,12 @@ import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons
 import { styles } from '../theme';
 import TrendingFilms from '../components/trendingFilms';
 import Watchlist from '../components/watchlist';
+import TopRatedFilms from '../components/topRatedFilms';
 import { useState } from 'react';
 
 const ios = Platform.OS === 'ios';
+const baseMargin = ios? 'mb-2': 'mb-3';
+
 
 export default function HomeScreen() {
     
@@ -19,7 +22,7 @@ export default function HomeScreen() {
     return (
         <View className="flex-1 bg-neutral-800" >
             {/* search bar and logo */}
-            <SafeAreaView className={ios? 'mb-2': 'mb-3'}>
+            <SafeAreaView className={baseMargin}>
                 <StatusBar style="light" />
 
                 <View className="flex-row justify-between items-center mx-4">
@@ -53,7 +56,7 @@ export default function HomeScreen() {
                 <TrendingFilms title="Trending" data={trending} />
 
                 {/* Top Rated Films Carousel */}
-                <TrendingFilms title="Top Rated" data={topRated} />
+                <TopRatedFilms title="Top Rated" data={topRated} />
 
             </ScrollView>
         </View>

@@ -5,11 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 
 var {width, height} = Dimensions.get('window');
 
-export default function TrendingFilms({title, data}) {
+export default function TopRatedFilms({title, data}) {
     
     let filmName = 'the best movie ever';
     const navigation = useNavigation(); 
-    const handleClick = (item) => {
+    const handleClick = () => {
         navigation.navigate('Film', item);
     }
 
@@ -35,7 +35,7 @@ export default function TrendingFilms({title, data}) {
                         return (
                             <TouchableWithoutFeedback 
                                 key={index}
-                                onPress={()=> handleClick(item)}
+                                onPress={handleClick}
                             >
                                 <View className="space-y-1 mr-4">
                                     <Image
