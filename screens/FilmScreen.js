@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeftIcon, EyeIcon} from 'react-native-heroicons/outline';
 import { EyeIcon as EyeIconSolid } from 'react-native-heroicons/solid';
-
 import { styles } from '../theme';
 
 var {width, height} = Dimensions.get('window');
@@ -19,8 +18,6 @@ export default function FilmScreen() {
     useEffect(() => {
         // call API
     }, [item])
-  
-// style={styles.background}
 
     return (
         <ScrollView
@@ -39,6 +36,7 @@ export default function FilmScreen() {
                     {/* add button */}
                     <TouchableOpacity >
                         <EyeIcon size="30" strokeWidth={2} color="white" />
+                        {/* <EyeIconSolid size="30" strokeWidth={2} color="yellow"/> */}
                     </TouchableOpacity>
                 </SafeAreaView>                          
             </View>
