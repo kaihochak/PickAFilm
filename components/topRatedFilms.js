@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 var {width, height} = Dimensions.get('window');
 
-export default function TopRatedFilms({title, data}) {
+export default function TopRatedFilms({title, data, hideSeeAll}) {
     
     let filmName = 'the best movie ever';
     const navigation = useNavigation(); 
@@ -19,9 +19,14 @@ export default function TopRatedFilms({title, data}) {
             {/* Title */}
             <View className="flex-row justify-between items-center mx-4">
                 <Text className="text-white text-xl">{title}</Text>
-                <TouchableOpacity>
-                    <Text style={styles.text} className="text-white text-xl">See All</Text>
-                </TouchableOpacity>
+
+                {
+                    !hideSeeAll &&  (
+                        <TouchableOpacity>
+                            <Text style={styles.text} className="text-white text-xl">See All</Text>
+                        </TouchableOpacity>
+                    )
+                }
             </View>
 
             {/* Films */}

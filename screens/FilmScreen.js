@@ -7,6 +7,7 @@ import { EyeIcon as EyeIconSolid } from 'react-native-heroicons/solid';
 import { styles, theme } from '../theme';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cast from '../components/cast';
+import TopRatedFilms from '../components/topRatedFilms';
 
 var {width, height} = Dimensions.get('window');
 const ios = Platform.OS === 'ios';
@@ -17,7 +18,8 @@ export default function FilmScreen() {
     const {params: item} =  useRoute();
     const [inWatchlist, toggleWatchlist] = useState(false);
     const navigation = useNavigation();
-    const [cast, setCast] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]); 
+    const [cast, setCast] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+    const [similarFilms, setSimilarFilms] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
     let filmName = 'the best movie ever';
 
     useEffect(() => {
@@ -89,7 +91,10 @@ export default function FilmScreen() {
             {/* Cast */}
             <Cast navigation={navigation} cast={cast}/>
 
-
+            {/* Similar Films */}
+            <View className="mt-4">
+                <TopRatedFilms title="Similar Films" hideSeeAll={true} data={similarFilms}/>
+            </View>
         </ScrollView>
     )
 }
