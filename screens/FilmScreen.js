@@ -7,7 +7,7 @@ import { EyeIcon as EyeIconSolid } from 'react-native-heroicons/solid';
 import { styles, theme } from '../theme';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cast from '../components/cast';
-import TopRatedFilms from '../components/topRatedFilms';
+import filmList from '../components/filmList.js';
 import Loading from '../components/loading';
 
 var {width, height} = Dimensions.get('window');
@@ -27,6 +27,7 @@ export default function FilmScreen() {
 
     useEffect(() => {
         // call API
+        console.log('itemId: ', item.id);
     }, [item])
 
     return (
@@ -104,9 +105,10 @@ export default function FilmScreen() {
             <Cast navigation={navigation} cast={cast}/>
 
             {/* Similar Films */}
-            <View className="mt-4">
-                <TopRatedFilms title="Similar Films" hideSeeAll={true} data={similarFilms}/>
-            </View>
+            {/* <View className="mt-4">
+                <filmList.js title="Similar Films" hideSeeAll={true} data={similarFilms}/>
+            </View> */}
+
         </ScrollView>
     )
 }

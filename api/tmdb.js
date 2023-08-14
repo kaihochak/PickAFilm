@@ -57,6 +57,9 @@ export const fetchWatchlist = ()=>{
 export const fetchTopRated = ()=>{
     return apiCall(topRatedMoviesEndpoint);
 }
+export const fetchUpcoming = ()=>{
+    return apiCall(upcomingMoviesEndpoint);
+}
 
 // movie screen apis
 export const fetchMovieDetails = (id)=>{

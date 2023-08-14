@@ -2,14 +2,14 @@ import { View, Text, TouchableWithoutFeedback, ScrollView, Dimensions, Image, To
 import React from 'react';
 import { styles } from '../theme';
 import { useNavigation } from '@react-navigation/native';
+import { fallbackMoviePoster, image185 } from '../api/tmdb';
 
 var {width, height} = Dimensions.get('window');
 
-export default function TrendingFilms({title, data}) {
+export default function FilmList({title, hideSeeAll, data}) {
     
-    let filmName = 'the best movie ever';
     const navigation = useNavigation(); 
-    const handleClick = (item) => {
+    const handleClick = () => {
         navigation.navigate('Film', item);
     }
 
@@ -19,9 +19,14 @@ export default function TrendingFilms({title, data}) {
             {/* Title */}
             <View className="flex-row justify-between items-center mx-4">
                 <Text className="text-white text-xl">{title}</Text>
-                <TouchableOpacity>
-                    <Text style={styles.text} className="text-white text-xl">See All</Text>
-                </TouchableOpacity>
+
+                {
+                    !hideSeeAll &&  (
+                        <TouchableOpacity>
+                            <Text style={styles.text} className="text-white text-xl">See All</Text>
+                        </TouchableOpacity>
+                    )
+                }
             </View>
 
             {/* Films */}
@@ -35,17 +40,17 @@ export default function TrendingFilms({title, data}) {
                         return (
                             <TouchableWithoutFeedback 
                                 key={index}
-                                onPress={()=> handleClick(item)}
+                                onPress={handleClick}
                             >
                                 <View className="space-y-1 mr-4">
                                     <Image
-                                        source={require('../assets/images/poster1.jpg')}
+                                        source={{uri: image185(item.poster_path)} || fallbackMoviePoster}
                                         className="rounded-3xl"
                                         style={{width: width*0.33, height: height*0.22}}
                                     />
                                     <Text className="text-neutral-300 ml-1">
                                         {
-                                            filmName.length > 14 ? filmName.slice(0, 14) + '...' : filmName
+                                            item.title.length > 14 ? item.title.slice(0, 14) + '...' : item.title
                                         }
                                     </Text>
                                 </View>

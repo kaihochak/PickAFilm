@@ -5,8 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { styles } from '../theme';
 import Watchlist from '../components/watchlist';
-import TrendingFilms from '../components/trendingFilms';
-import TopRatedFilms from '../components/topRatedFilms';
+import FilmList from '../components/filmList';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { fetchWatchlist, fetchTopRated, fetchTrending, fetchUpcoming } from '../api/tmdb' 
@@ -20,10 +19,10 @@ const baseMargin = ios? 'mb-2': 'mb-3';
 
 export default function HomeScreen() {
     
-    const [watchlist, setWatchlist] = useState([1,2,3]); 
-    const [trending, setTrending] = useState([1,2,3]); 
-    const [topRated, setTopRated] = useState([1,2,3]); 
-    const [upcoming, setUpcoming] = useState([1,2,3]); 
+    const [watchlist, setWatchlist] = useState([]); 
+    const [trending, setTrending] = useState([]); 
+    const [topRated, setTopRated] = useState([]); 
+    const [upcoming, setUpcoming] = useState([]); 
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();  
 
@@ -106,17 +105,18 @@ export default function HomeScreen() {
                         {/* Watchlist Films Carousel */}
                         <Watchlist data={watchlist} />
 
-                        {/* Trending Films Carousel */}
-                        <TrendingFilms title="Trending" data={trending} />
-
                         {/* Top Rated Films Carousel */}
-                        <TopRatedFilms title="Top Rated" data={topRated} />
+                        <FilmList title="Top Rated" data={topRated} />
 
+                        {/* Trending Films Carousel */}
+                        <FilmList title="Trending" data={trending} />
+
+                        {/* Upcoming Films Carousel */}
+                        <FilmList title="Upcoming" data={upcoming} />
+                 
                     </ScrollView>
                 )
             }
-
-
         </View>
     )
 }
