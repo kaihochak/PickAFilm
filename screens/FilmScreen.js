@@ -9,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Cast from '../components/cast';
 import filmList from '../components/filmList.js';
 import Loading from '../components/loading';
+import { fetchFilmDetails, image500 } from '../api/tmdb';
 
 var {width, height} = Dimensions.get('window');
 const ios = Platform.OS === 'ios';
@@ -22,13 +23,21 @@ export default function FilmScreen() {
     const [cast, setCast] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
     const [similarFilms, setSimilarFilms] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
     const [loading, setLoading] = useState(false);
-
-    let filmName = 'the best movie ever';
+    const [filmDetails, setFilmDetails] = useState({});
 
     useEffect(() => {
         // call API
-        console.log('itemId: ', item.id);
+        // console.log('itemId: ', item.id);
+        setLoading(true);
+        getFilmDetails(item.id);
     }, [item])
+
+    // fetch data for film details
+    const getFilmDetails = async id => {
+        const data = await fetchFilmDetails(id);
+        if (data) setFilmDetails(data);
+        setLoading(false);
+    }
 
     return (
         <ScrollView
@@ -57,7 +66,7 @@ export default function FilmScreen() {
                     ) : (
                         <View>
                             <Image
-                                source={require('../assets/images/poster1.jpg')}
+                                source={{uri: image500(item.poster_path) || fallbackMoviePoster}}
                                 style={{width: width, height: height*0.55}}
                             />
                             <LinearGradient
@@ -75,31 +84,46 @@ export default function FilmScreen() {
             
             {/* Film Information */}
             <View style={{marginTop: -(height*0.09)}} className="space-y-3">
-                
-                {/* title */}
-                <Text className="text-white text-center text-3xl font-bold tracking-wider">
-                    {/* {item.title} */}
-                    {filmName}
-                </Text>
+        {/* title */}
+        <Text className="text-white text-center text-3xl font-bold tracking-widest">
+            {
+                filmDetails?.title
+            }
+        </Text>
 
-                {/* Information */}
+        {/* status, release year, runtime */}
+        {
+            filmDetails?.id? (
                 <Text className="text-neutral-400 font-semibold text-base text-center">
-                    {/* {item.release_date} */}
-                    2021 | 170 min
+                    {filmDetails?.status} • {filmDetails?.release_date?.split('-')[0] || 'N/A'} • {filmDetails?.runtime} min
                 </Text>
+            ):null
+        }
+        
 
-                {/* Genres */}
-                <Text className="text-neutral-400 font-semibold text-base text-center">
-                    Action | Adventure | Fantasy
-                </Text>
+        
+        {/* genres  */}
+        <View className="flex-row justify-center mx-4 space-x-2">
+            {
+                filmDetails?.genres?.map((genre,index)=>{
+                    let showDot = index+1 != filmDetails.genres.length;
+                    return (
+                        <Text key={index} className="text-neutral-400 font-semibold text-base text-center">
+                            {genre?.name} {showDot? "•":null}
+                        </Text>
+                    )
+                })
+            }
+        </View>
 
-                {/* Description */}
-                <Text className="text-neutral-400 mx-4 tracking-wide">
-                    {/* {item.overview} */}
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, voluptatum. Quisquam, voluptatum. Quisquam, voluptatum.
-                </Text>
-            </View>
+        {/* description */}
+        <Text className="text-neutral-400 mx-4 tracking-wide">
+            {
+                filmDetails?.overview
+            }
+        </Text>
+        
+     </View>
 
             {/* Cast */}
             <Cast navigation={navigation} cast={cast}/>
