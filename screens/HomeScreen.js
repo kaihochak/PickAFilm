@@ -50,10 +50,12 @@ export default function HomeScreen() {
 
             {/* Film List */}
             {
+                // loading page
                 loading? (
                     <Loading />
                 ) : (
                   
+                    // film lists
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{paddingBottom: 10}}

@@ -62,10 +62,13 @@ export default function SearchScreen() {
 
         {/* search results */}
         {
+            // loading page
             loading? (
                 <Loading />
             ): 
+            // results page
             results.length>0? (
+                // show the results
                 <ScrollView 
                     showsVerticalScrollIndicator={false} 
                     contentContainerStyle={{paddingHorizontal:15}}
@@ -100,6 +103,7 @@ export default function SearchScreen() {
                     </View>
                 </ScrollView>
             ):(
+                // no results
                 <View className="flex-row justify-center">
                     <Image 
                         source={require('../assets/images/poster1.jpg')} 

@@ -19,7 +19,7 @@ export default function PersonScreen() {
     const navigation = useNavigation();
     const [person, setPerson] = useState({});
     const [personMovies, setPersonMovies] = useState([]);
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
         // setLoading(true);
@@ -62,8 +62,10 @@ export default function PersonScreen() {
         {/* person details */}
         {
             loading? (
+                // Loading Page
                 <Loading />
             ):(
+                // Person Details
                 <View>
                     <View 
                         className="flex-row justify-center"

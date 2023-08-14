@@ -8,6 +8,7 @@ import { styles, theme } from '../theme';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cast from '../components/cast';
 import TopRatedFilms from '../components/topRatedFilms';
+import Loading from '../components/loading';
 
 var {width, height} = Dimensions.get('window');
 const ios = Platform.OS === 'ios';
@@ -20,6 +21,8 @@ export default function FilmScreen() {
     const navigation = useNavigation();
     const [cast, setCast] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
     const [similarFilms, setSimilarFilms] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+    const [loading, setLoading] = useState(false);
+
     let filmName = 'the best movie ever';
 
     useEffect(() => {
@@ -32,7 +35,7 @@ export default function FilmScreen() {
             className="flex-1 bg-neutral-900"
         >
             {/* back button and poster */}
-            <View className="full">
+            <View className="w-full">
                 <SafeAreaView className={"absolute z-20 w-full flex-row justify-between items-center px-4" + topMargin}>
 
                     {/* back button */}
@@ -45,19 +48,28 @@ export default function FilmScreen() {
                         <EyeIcon size="30" strokeWidth={2} color={inWatchlist? theme.background : "white"} />
                     </TouchableOpacity>
                 </SafeAreaView>        
-                <View>
-                    <Image
-                        source={require('../assets/images/poster1.jpg')}
-                        style={{width: width, height: height*0.55}}
-                    />
-                    <LinearGradient
-                        colors={['transparent', 'rgba(23,23,23,0.8)', 'rgba(23,23,23,1)']}
-                        style={{width, height: height*0.4}}
-                        start={{x: 0.5, y: 0}}
-                        end={{x: 0.5, y: 1}}
-                        className='absolute bottom-0'
-                    />
-                </View>
+
+                {/* poster */}
+                {
+                    loading? (
+                        <Loading />
+                    ) : (
+                        <View>
+                            <Image
+                                source={require('../assets/images/poster1.jpg')}
+                                style={{width: width, height: height*0.55}}
+                            />
+                            <LinearGradient
+                                colors={['transparent', 'rgba(23,23,23,0.8)', 'rgba(23,23,23,1)']}
+                                style={{width, height: height*0.4}}
+                                start={{x: 0.5, y: 0}}
+                                end={{x: 0.5, y: 1}}
+                                className='absolute bottom-0'
+                            />
+                        </View>
+                    )
+                }
+
             </View>
             
             {/* Film Information */}
