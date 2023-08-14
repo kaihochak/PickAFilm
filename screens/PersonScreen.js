@@ -60,10 +60,10 @@ export default function PersonScreen() {
         </SafeAreaView>
 
         {/* person details */}
-        {/* {
+        {
             loading? (
                 <Loading />
-            ):( */}
+            ):(
                 <View>
                     <View 
                         className="flex-row justify-center"
@@ -141,12 +141,8 @@ export default function PersonScreen() {
                     {/* { person?.id && personMovies.length>0 && <TrendingFilms title="Films" hideSeeAll={true} data={personMovies} /> } */}
                 
                 </View>
-            {/* )
-        } */}
-       
-        
-
+            )
+        } 
     </ScrollView>
-    
   )
 }

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, ScrollViewBase } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -8,6 +8,8 @@ import TrendingFilms from '../components/trendingFilms';
 import Watchlist from '../components/watchlist';
 import TopRatedFilms from '../components/topRatedFilms';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import Loading from '../components/loading';
 
 const ios = Platform.OS === 'ios';
 const baseMargin = ios? 'mb-2': 'mb-3';
@@ -18,6 +20,7 @@ export default function HomeScreen() {
     const [watchlist, setWatch] = useState([1,2,3]); 
     const [trending, setTrending] = useState([1,2,3]); 
     const [topRated, settopRated] = useState([1,2,3]); 
+    const [loading, setLoading] = useState(false);
     const navigation = useNavigation();  
 
     return (
@@ -46,20 +49,29 @@ export default function HomeScreen() {
             </SafeAreaView>
 
             {/* Film List */}
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{paddingBottom: 10}}
-            >
-                {/* Watchlist Films Carousel */}
-                <Watchlist data={watchlist} />
+            {
+                loading? (
+                    <Loading />
+                ) : (
+                  
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{paddingBottom: 10}}
+                    >
+                        {/* Watchlist Films Carousel */}
+                        <Watchlist data={watchlist} />
 
-                {/* Trending Films Carousel */}
-                <TrendingFilms title="Trending" data={trending} />
+                        {/* Trending Films Carousel */}
+                        <TrendingFilms title="Trending" data={trending} />
 
-                {/* Top Rated Films Carousel */}
-                <TopRatedFilms title="Top Rated" data={topRated} />
+                        {/* Top Rated Films Carousel */}
+                        <TopRatedFilms title="Top Rated" data={topRated} />
 
-            </ScrollView>
+                    </ScrollView>
+                )
+            }
+
+
         </View>
     )
 }
