@@ -158,11 +158,17 @@ export default function FilmScreen() {
             </View>
 
             {/* Cast */}
-            <Cast navigation={navigation} cast={cast} />
+            {
+                cast.length > 0 &&             
+                <Cast navigation={navigation} cast={cast} />
+            }
 
             {/* Similar Films */}
             <View className="mt-4">
-                <FilmList title="Similar Films" hideSeeAll={true} data={similarFilms} />
+                {
+                    similarFilms.length > 0 &&
+                    <FilmList title="Similar Films" hideSeeAll={true} data={similarFilms} />
+                }
             </View>
         </ScrollView>
     );

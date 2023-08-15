@@ -12,7 +12,7 @@ const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
 
 // movie
 const movieDetailsEndpoint = id => `${apiBaseUrl}/movie/${id}?api_key=${apiKey}`;
-const movieCreditsEndpoint = id => `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}`;
+const movieCreditsEndpoint = id  => `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}`;
 const similarMoviesEndpoint = id => `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}`;
 
 // person
@@ -80,7 +80,7 @@ export const fetchPersonFilms = (personId) => {
 }
 
 // search screen apis
-export const searchMovies = (params) => {
+export const searchFilms = (params) => {
     return apiCall(searchMoviesEndpoint, params);
 }
 

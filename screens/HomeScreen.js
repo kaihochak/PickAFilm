@@ -97,11 +97,23 @@ export default function HomeScreen() {
                     <Loading />
                 ) : (
                   
+
+                    // Film Picker
                     // film lists
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{paddingBottom: 10}}
                     >
+
+<View className="flex-row justify-between items-center mx-4 mt-4">
+
+<Text className="text-white text-2xl font-bold mx-4 mt-4">
+    Pick A Film
+</Text>
+
+</View>
+
+
                         {/* Watchlist Films Carousel */}
                         <Watchlist data={watchlist} />
 
