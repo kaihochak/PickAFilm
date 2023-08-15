@@ -11,77 +11,76 @@ const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
 // endpoints with dynamic params
 
 // movie
-const movieDetailsEndpoint = id=> `${apiBaseUrl}/movie/${id}?api_key=${apiKey}`;
-const movieCreditsEndpoint = id=> `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}`;
-const similarMoviesEndpoint = id=> `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}`;
+const movieDetailsEndpoint = id => `${apiBaseUrl}/movie/${id}?api_key=${apiKey}`;
+const movieCreditsEndpoint = id => `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}`;
+const similarMoviesEndpoint = id => `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}`;
 
 // person
-const personDetailsEndpoint = id=> `${apiBaseUrl}/person/${id}?api_key=${apiKey}`;
-const personMoviesEndpoint = id=> `${apiBaseUrl}/person/${id}/movie_credits?api_key=${apiKey}`;
+const personDetailsEndpoint = person_id => `${apiBaseUrl}/person/${person_id}?api_key=${apiKey}`;
+const personMoviesEndpoint = person_id => `${apiBaseUrl}/person/${person_id}/movie_credits?api_key=${apiKey}`;
 
 // functions to get images of different widths, (show images using these to improve the loading times)
-export const image500 = posterPath=> posterPath? 'https://image.tmdb.org/t/p/w500'+posterPath : null;
-export const image342 = posterPath=> posterPath? 'https://image.tmdb.org/t/p/w342'+posterPath : null;
-export const image185 = posterPath=> posterPath? 'https://image.tmdb.org/t/p/w185'+posterPath : null;
-
+export const image500 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w500' + posterPath : null;
+export const image342 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w342' + posterPath : null;
+export const image185 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w185' + posterPath : null;
 
 // fallback images 
 export const fallbackMoviePoster = 'https://img.myloview.com/stickers/white-laptop-screen-with-hd-video-technology-icon-isolated-on-grey-background-abstract-circle-random-dots-vector-illustration-400-176057922.jpg';
 export const fallbackPersonImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmUiF-YGjavA63_Au8jQj7zxnFxS_Ay9xc6pxleMqCxH92SzeNSjBTwZ0l61E4B3KTS7o&usqp=CAU';
 
-
 // API CALL Method 
-const apiCall = async (endpoint, params)=>{
+const apiCall = async (endpoint, params) => {
     const options = {
         method: 'GET',
         url: endpoint,
-        params: params? params: {}
+        params: params ? params : {}
     };
 
-    try{
+    try {
         const response = await axios.request(options);
         return response.data;
-    }catch(error){
-        console.log('error: ',error);
+    } catch (error) {
+        console.log('error: ', error);
         return {};
     }
 }
 
 // home screen apis
-export const fetchTrending = ()=>{
+export const fetchTrending = () => {
     return apiCall(trendingMoviesEndpoint);
 }
-export const fetchWatchlist = ()=>{
+export const fetchWatchlist = () => {
     return apiCall(upcomingMoviesEndpoint);
 }
-export const fetchTopRated = ()=>{
+export const fetchTopRated = () => {
     return apiCall(topRatedMoviesEndpoint);
 }
-export const fetchUpcoming = ()=>{
+export const fetchUpcoming = () => {
     return apiCall(upcomingMoviesEndpoint);
 }
 
 // movie screen apis
-export const fetchFilmDetails = (id)=>{
+export const fetchFilmDetails = (id) => {
     return apiCall(movieDetailsEndpoint(id));
 }
-export const fetchCast = (movieId)=>{
+export const fetchCast = (movieId) => {
     return apiCall(movieCreditsEndpoint(movieId));
 }
-export const fetchSimilarMovies = (movieId)=>{
+export const fetchSimilarMovies = (movieId) => {
     return apiCall(similarMoviesEndpoint(movieId));
 }
 
 // person screen apis
-export const fetchPersonDetails = (personId)=>{
+export const fetchPersonDetails = (personId) => {
+    console.log('personId: ', personId);
     return apiCall(personDetailsEndpoint(personId));
 }
-export const fetchPersonMovies = (personId)=>{
+export const fetchPersonFilms = (personId) => {
     return apiCall(personMoviesEndpoint(personId));
 }
 
 // search screen apis
-export const searchMovies = (params)=>{
+export const searchMovies = (params) => {
     return apiCall(searchMoviesEndpoint, params);
 }
 
