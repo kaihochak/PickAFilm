@@ -65,7 +65,7 @@ export const fetchUpcoming = ()=>{
 export const fetchFilmDetails = (id)=>{
     return apiCall(movieDetailsEndpoint(id));
 }
-export const fetchMovieCredits = (movieId)=>{
+export const fetchCast = (movieId)=>{
     return apiCall(movieCreditsEndpoint(movieId));
 }
 export const fetchSimilarMovies = (movieId)=>{

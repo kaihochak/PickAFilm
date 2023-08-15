@@ -7,9 +7,10 @@ import { EyeIcon as EyeIconSolid } from 'react-native-heroicons/solid';
 import { styles, theme } from '../theme';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cast from '../components/cast';
-import filmList from '../components/filmList.js';
+import FilmList from '../components/filmList';
 import Loading from '../components/loading';
-import { fetchFilmDetails, image500 } from '../api/tmdb';
+import { fetchFilmDetails, fetchCast, image500, fetchSimilarMovies } from '../api/tmdb';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 var {width, height} = Dimensions.get('window');
 const ios = Platform.OS === 'ios';
@@ -20,16 +21,18 @@ export default function FilmScreen() {
     const {params: item} =  useRoute();
     const [inWatchlist, toggleWatchlist] = useState(false);
     const navigation = useNavigation();
-    const [cast, setCast] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-    const [similarFilms, setSimilarFilms] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+    const [cast, setCast] = useState([]);
+    const [similarFilms, setSimilarFilms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [filmDetails, setFilmDetails] = useState({});
 
     useEffect(() => {
-        // call API
-        // console.log('itemId: ', item.id);
         setLoading(true);
+
+        // call API
         getFilmDetails(item.id);
+        getCast(item.id);
+        getSimilarFilms(item.id);
     }, [item])
 
     // fetch data for film details
@@ -37,6 +40,19 @@ export default function FilmScreen() {
         const data = await fetchFilmDetails(id);
         if (data) setFilmDetails(data);
         setLoading(false);
+    }
+
+    // fetch data for cast
+    const getCast = async id => {
+        const data = await fetchCast(id);
+        if (data && data.cast) setCast(data.cast);
+    }
+
+    // fetch data for similar films
+    const getSimilarFilms = async id => {
+        const data = await fetchSimilarMovies(id);
+        console.log('got similar films', data.results);
+        if (data && data.results) setSimilarFilms(data.results);
     }
 
     return (
@@ -126,12 +142,12 @@ export default function FilmScreen() {
      </View>
 
             {/* Cast */}
-            <Cast navigation={navigation} cast={cast}/>
+            <Cast navigation={navigation} cast={cast}/> 
 
             {/* Similar Films */}
-            {/* <View className="mt-4">
-                <filmList.js title="Similar Films" hideSeeAll={true} data={similarFilms}/>
-            </View> */}
+            <View className="mt-4">
+                <FilmList title="Similar Films" hideSeeAll={true} data={similarFilms}/>
+            </View>
 
         </ScrollView>
     )

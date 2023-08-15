@@ -9,7 +9,7 @@ var {width, height} = Dimensions.get('window');
 export default function FilmList({title, hideSeeAll, data}) {
     
     const navigation = useNavigation(); 
-    const handleClick = () => {
+    const handleClick = (item) => {
         navigation.navigate('Film', item);
     }
 
@@ -40,7 +40,7 @@ export default function FilmList({title, hideSeeAll, data}) {
                         return (
                             <TouchableWithoutFeedback 
                                 key={index}
-                                onPress={handleClick}
+                                onPress={()=> handleClick(item)}
                             >
                                 <View className="space-y-1 mr-4">
                                     <Image
