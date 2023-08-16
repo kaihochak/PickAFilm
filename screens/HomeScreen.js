@@ -17,7 +17,6 @@ import FilmParties from '../components/filmParties';
 const ios = Platform.OS === 'ios';
 const baseMargin = ios? 'mb-2': 'mb-3';
 
-
 export default function HomeScreen() {
     
     const [filmParties, setFilmParties] = useState([]);
@@ -28,6 +27,7 @@ export default function HomeScreen() {
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();  
 
+    // call api, fetch data
     useEffect(()=>{
         getWatchlist();
         getTrending();
@@ -76,8 +76,9 @@ export default function HomeScreen() {
                 <View className="flex-row justify-between items-center mx-4">
 
                     {/* Menu */}
+                    {/* to do: make the menu bar able to popout and have selections of function */}
                     <Bars3CenterLeftIcon size="30" strokeWidth={2} color="white" />
-
+                    
                     {/* Logo */}
                     <Text 
                         className="text-white text-3xl font-bold">
@@ -99,7 +100,6 @@ export default function HomeScreen() {
                     <Loading />
                 ) : (
                   
-
                     // Film Picker
                     // film lists
                     <ScrollView
@@ -108,6 +108,7 @@ export default function HomeScreen() {
                     >
 
                         {/* Film Parties */}
+                        {/* TO DO - very important in stage 2 */}
                         <FilmParties title="Your Film Parties" data={watchlist}/>
 
                         {/* Watchlist Films Carousel */}

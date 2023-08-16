@@ -24,6 +24,7 @@ import {
     fetchSimilarMovies,
 } from "../api/tmdb";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+import FilmParties from "../components/filmParties";
 
 var { width, height } = Dimensions.get("window");
 const ios = Platform.OS === "ios";
@@ -35,12 +36,10 @@ export default function FilmScreen() {
     const navigation = useNavigation();
     const [cast, setCast] = useState([]);
     const [similarFilms, setSimilarFilms] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [filmDetails, setFilmDetails] = useState({});
 
     useEffect(() => {
-        setLoading(true);
-
         // call API
         getFilmDetails(item.id);
         getCast(item.id);
@@ -72,6 +71,7 @@ export default function FilmScreen() {
             contentContainerStyle={{ paddingBottom: 20 }}
             className="flex-1 bg-neutral-900"
         >
+
             {/* back button and poster */}
             <View className="w-full">
                 <SafeAreaView
@@ -158,10 +158,12 @@ export default function FilmScreen() {
             </View>
 
             {/* Cast */}
-            {
-                cast.length > 0 &&             
-                <Cast navigation={navigation} cast={cast} />
-            }
+            <View>
+                {
+                    cast.length > 0 &&             
+                    <Cast navigation={navigation} cast={cast} />
+                }
+            </View>
 
             {/* Similar Films */}
             <View className="mt-4">

@@ -59,7 +59,7 @@ export const fetchUpcoming = () => {
     return apiCall(upcomingMoviesEndpoint);
 }
 
-// movie screen apis
+// film screen apis
 export const fetchFilmDetails = (id) => {
     return apiCall(movieDetailsEndpoint(id));
 }

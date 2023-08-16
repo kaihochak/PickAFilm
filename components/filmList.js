@@ -7,7 +7,7 @@ import { fallbackMoviePoster, image185 } from '../api/tmdb';
 var {width, height} = Dimensions.get('window');
 
 export default function FilmList({title, hideSeeAll, data}) {
-    
+
     const navigation = useNavigation(); 
     const handleClick = (item) => {
         navigation.navigate('Film', item);
@@ -19,7 +19,6 @@ export default function FilmList({title, hideSeeAll, data}) {
             {/* Title */}
             <View className="flex-row justify-between items-center mx-4">
                 <Text className="text-white text-xl">{title}</Text>
-
                 {
                     !hideSeeAll &&  (
                         <TouchableOpacity>
@@ -37,10 +36,14 @@ export default function FilmList({title, hideSeeAll, data}) {
             >
                 {
                     data.map((item, index) => {
+
+                        // console.log("item: ", item);
+                        // console.log("index: ", index);
+
                         return (
                             <TouchableWithoutFeedback 
                                 key={index}
-                                onPress={()=> handleClick(item)}
+                                onPress={()=> handleClick(item)} // bring to filmScreen
                             >
                                 <View className="space-y-1 mr-4">
                                     <Image
