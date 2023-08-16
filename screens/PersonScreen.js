@@ -39,7 +39,7 @@ export default function PersonScreen() {
     const getPersonFilms = async id => {
         const data = await fetchPersonFilms(id);
         console.log('got person movies', data)
-        if (data  && data.cast) {
+        if (data && data.cast) {
             setPersonFilms(data.cast);
         }
     }
@@ -98,29 +98,28 @@ export default function PersonScreen() {
                             </Text>
                         </View>
 
-                        <View className="mx-3 p-4 mt-6 flex-row justify-between items-center bg-neutral-700 rounded-full ">
-                            <View className="border-r-2 border-r-neutral-400 px-2 items-center">
+                        <View className="mx-3 p-4 mt-6 flex-row justify-between items-center bg-neutral-700 rounded-full">
+                            {/* <View className="border-r-2 border-r-neutral-400 px-2 items-center">
                                 <Text className="text-white font-semibold ">Gender</Text>
                                 <Text className="text-neutral-300 text-sm">
-                                    Male
-                                    {/* {
-                                    person?.gender==1? 'Female': 'Male'
-                                } */}
+                                    {
+                                        person?.gender == 1 ? 'Female' : 'Male'
+                                    }
                                 </Text>
-                            </View>
-                            <View className="border-r-2 border-r-neutral-400 px-2 items-center">
+                            </View> */}
+                            <View className="border-r-2 border-r-neutral-400 px-10 items-center">
                                 <Text className="text-white font-semibold">Birthday</Text>
                                 <Text className="text-neutral-300 text-sm">
                                     {person?.birthday}
                                 </Text>
                             </View>
-                            <View className="border-r-2 border-r-neutral-400 px-2 items-center">
-                                <Text className="text-white font-semibold">known for</Text>
+                            {/* <View className="border-r-2 border-r-neutral-400 px-2 items-center">
+                                <Text className="text-white font-semibold">Known for</Text>
                                 <Text className="text-neutral-300 text-sm">
                                     {person?.known_for_department}
                                 </Text>
-                            </View>
-                            <View className="px-2 items-center">
+                            </View> */}
+                            <View className=" border-r-neutral-400 px-10 items-center">
                                 <Text className="text-white font-semibold">Popularity</Text>
                                 <Text className="text-neutral-300 text-sm">
                                     {person?.popularity?.toFixed(2)} %

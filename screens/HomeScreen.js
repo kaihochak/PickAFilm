@@ -12,6 +12,7 @@ import { fetchWatchlist, fetchTopRated, fetchTrending, fetchUpcoming } from '../
 import Loading from '../components/loading';
 import { Use } from 'react-native-svg';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import FilmParties from '../components/filmParties';
 
 const ios = Platform.OS === 'ios';
 const baseMargin = ios? 'mb-2': 'mb-3';
@@ -19,6 +20,7 @@ const baseMargin = ios? 'mb-2': 'mb-3';
 
 export default function HomeScreen() {
     
+    const [filmParties, setFilmParties] = useState([]);
     const [watchlist, setWatchlist] = useState([]); 
     const [trending, setTrending] = useState([]); 
     const [topRated, setTopRated] = useState([]); 
@@ -105,14 +107,8 @@ export default function HomeScreen() {
                         contentContainerStyle={{paddingBottom: 10}}
                     >
 
-<View className="flex-row justify-between items-center mx-4 mt-4">
-
-<Text className="text-white text-2xl font-bold mx-4 mt-4">
-    Pick A Film
-</Text>
-
-</View>
-
+                        {/* Film Parties */}
+                        <FilmParties title="Your Film Parties" data={watchlist}/>
 
                         {/* Watchlist Films Carousel */}
                         <Watchlist data={watchlist} />
