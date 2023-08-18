@@ -12,7 +12,7 @@ import { fetchWatchlist, fetchTopRated, fetchTrending, fetchUpcoming } from '../
 import Loading from '../components/loading';
 import { Use } from 'react-native-svg';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import EventList from '../components/eventList';
+import EventCardList from '../components/eventCardList';
 // import events from '../constants/index';
 
 const ios = Platform.OS === 'ios';
@@ -30,7 +30,7 @@ export default function HomeScreen() {
 
     // call api, fetch data
     useEffect(()=>{
-        // getEventList();
+        // getEventCardList();
         getWatchlist();
         getTrending();
         getTopRated();
@@ -38,7 +38,7 @@ export default function HomeScreen() {
     }  ,[]);
 
     // fetch data for event list
-    // const getEventList = async ()=>{
+    // const getEventCardList = async ()=>{
     //     const data = [{1,2,3}];
     //     setEvents(data);
     //     setLoading(false);
@@ -118,7 +118,7 @@ export default function HomeScreen() {
 
                         {/* Event List Carousel */}
                         {/* TO DO - very important in stage 2 */}
-                        <EventList title="My Events" />
+                        <EventCardList title="My Events" />
 
                         {/* Watchlist Films Carousel */}
                         <Watchlist data={watchlist} />
