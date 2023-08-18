@@ -12,14 +12,15 @@ import { fetchWatchlist, fetchTopRated, fetchTrending, fetchUpcoming } from '../
 import Loading from '../components/loading';
 import { Use } from 'react-native-svg';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import FilmParties from '../components/filmParties';
+import EventList from '../components/eventList';
+// import events from '../constants/index';
 
 const ios = Platform.OS === 'ios';
 const baseMargin = ios? 'mb-2': 'mb-3';
 
 export default function HomeScreen() {
     
-    const [filmParties, setFilmParties] = useState([]);
+    // const [events, setEvents] = useState([1,2,3]);
     const [watchlist, setWatchlist] = useState([]); 
     const [trending, setTrending] = useState([]); 
     const [topRated, setTopRated] = useState([]); 
@@ -29,11 +30,19 @@ export default function HomeScreen() {
 
     // call api, fetch data
     useEffect(()=>{
+        // getEventList();
         getWatchlist();
         getTrending();
         getTopRated();
         getUpcoming();
     }  ,[]);
+
+    // fetch data for event list
+    // const getEventList = async ()=>{
+    //     const data = [{1,2,3}];
+    //     setEvents(data);
+    //     setLoading(false);
+    // }
 
     // fetch data for watchlist films
     const getWatchlist = async ()=>{
@@ -107,9 +116,9 @@ export default function HomeScreen() {
                         contentContainerStyle={{paddingBottom: 10}}
                     >
 
-                        {/* Film Parties */}
+                        {/* Event List Carousel */}
                         {/* TO DO - very important in stage 2 */}
-                        <FilmParties title="Your Film Parties" data={watchlist}/>
+                        <EventList title="My Events" />
 
                         {/* Watchlist Films Carousel */}
                         <Watchlist data={watchlist} />

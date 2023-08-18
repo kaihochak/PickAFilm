@@ -24,7 +24,6 @@ import {
     fetchSimilarMovies,
 } from "../api/tmdb";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
-import FilmParties from "../components/filmParties";
 
 var { width, height } = Dimensions.get("window");
 const ios = Platform.OS === "ios";
