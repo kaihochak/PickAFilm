@@ -30,7 +30,7 @@ const ios = Platform.OS === "ios";
 const topMargin = ios ? "" : "mt-3";
 
 export default function EventScreen() {
-    const { params: item } = useRoute();
+    const { params: event } = useRoute();
     const [inWatchlist, toggleWatchlist] = useState(false);
     const navigation = useNavigation();
     const [cast, setCast] = useState([]);
@@ -40,10 +40,11 @@ export default function EventScreen() {
 
     useEffect(() => {
         // call API
-        getFilmDetails(item.id);
-        getCast(item.id);
-        getSimilarFilms(item.id);
-    }, [item]);
+        // getFilmDetails(item.id);
+        // getCast(item.id);
+        // getSimilarFilms(item.id);
+        setLoading(false);
+    }, [event]);
 
     // fetch data for film details
     const getFilmDetails = async (id) => {
@@ -65,14 +66,20 @@ export default function EventScreen() {
         if (data && data.results) setSimilarFilms(data.results);
     };
 
+
+    console.log('event', event?.name);
+
     return (
+        
         <ScrollView
             contentContainerStyle={{ paddingBottom: 20 }}
             className="flex-1 bg-neutral-900"
         >
 
-            {/* back button and poster */}
+            {/* buttons and poster */}
             <View className="w-full">
+
+                {/* Buttons */}
                 <SafeAreaView
                     className={
                         "absolute z-20 w-full flex-row justify-between items-center px-4" +
@@ -88,24 +95,22 @@ export default function EventScreen() {
                     </TouchableOpacity>
 
                     {/* watchlist button */}
-                    <TouchableOpacity onPress={() => toggleWatchlist(!inWatchlist)}>
+                    {/* <TouchableOpacity onPress={() => toggleWatchlist(!inWatchlist)}>
                         <EyeIcon
                             size="30"
                             strokeWidth={2}
                             color={inWatchlist ? theme.background : "white"}
                         />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+                    
                 </SafeAreaView>
 
                 {/* poster */}
-                {loading ? (
-                    <Loading />
-                ) : (
+                {
+                    loading ? ( <Loading /> ) : (
                     <View>
                         <Image
-                            source={{
-                                uri: image500(item.poster_path) || fallbackMoviePoster,
-                            }}
+                            source={event?.image}
                             style={{ width: width, height: height * 0.55 }}
                         />
                         <LinearGradient
@@ -116,39 +121,24 @@ export default function EventScreen() {
                             className="absolute bottom-0"
                         />
                     </View>
-                )}
+                    )
+                }
             </View>
 
-            {/* Film Information */}
+
+            {/* Event Information */}
             <View style={{ marginTop: -(height * 0.09) }} className="space-y-3">
-                {/* title */}
+
+                {/* Event Title */}
                 <Text className="text-white text-center text-3xl font-bold tracking-widest">
-                    {filmDetails?.title}
+                    Event Title
                 </Text>
 
-                {/* status, release year, runtime */}
-                {filmDetails?.id ? (
-                    <Text className="text-neutral-400 font-semibold text-base text-center">
-                        {filmDetails?.status} •{" "}
-                        {filmDetails?.release_date?.split("-")[0] || "N/A"} •{" "}
-                        {filmDetails?.runtime} min
-                    </Text>
-                ) : null}
+                {/* Date */}
+                <Text className="text-white text-center text-3xl font-bold tracking-widest">
+                    date
+                </Text>
 
-                {/* genres  */}
-                <View className="flex-row justify-center mx-4 space-x-2">
-                    {filmDetails?.genres?.map((genre, index) => {
-                        let showDot = index + 1 != filmDetails.genres.length;
-                        return (
-                            <Text
-                                key={index}
-                                className="text-neutral-400 font-semibold text-base text-center"
-                            >
-                                {genre?.name} {showDot ? "•" : null}
-                            </Text>
-                        );
-                    })}
-                </View>
 
                 {/* description */}
                 <Text className="text-neutral-400 mx-4 tracking-wide">
@@ -157,20 +147,20 @@ export default function EventScreen() {
             </View>
 
             {/* Cast */}
-            <View>
+            {/* <View>
                 {
                     cast.length > 0 &&             
                     <Cast navigation={navigation} cast={cast} />
                 }
-            </View>
+            </View> */}
 
-            {/* Similar Films */}
-            <View className="mt-4">
+            {/* Similar Event */}
+            {/* <View className="mt-4">
                 {
                     similarFilms.length > 0 &&
                     <FilmList title="Similar Films" hideSeeAll={true} data={similarFilms} />
                 }
-            </View>
+            </View> */}
         </ScrollView>
     );
 }

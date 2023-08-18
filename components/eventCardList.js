@@ -91,7 +91,6 @@ export default function EventCardList({ title, hideSeeAll = false }) {
             {/* Title */}
             <View className="flex-row justify-between items-center mx-4">
                 <Text className="text-white text-xl">{title}</Text>
-
                 {
                     !hideSeeAll && (
                         <TouchableOpacity>
@@ -107,7 +106,6 @@ export default function EventCardList({ title, hideSeeAll = false }) {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ paddingLeft: 15}}
             >
-                
                 {
                     events?.map((event, index) => {
                         return (

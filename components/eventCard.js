@@ -16,7 +16,6 @@ export default function EventCard({ event }) {
     return (
 
         <View>
-            <Text>Event Card</Text>
             <TouchableWithoutFeedback
                 key={event.index}
                 onPress={() => handleClick(event)}
