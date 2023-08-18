@@ -1,12 +1,18 @@
 import { View, Text, Dimensions, TouchableWithoutFeedback, Image } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 
 var { width, height } = Dimensions.get('window');
 
 export default function EventCard({ event }) {
 
-    console.log('event: ', event.name);
+    const navigation = useNavigation();
 
+    const handleClick = (event) => {
+        navigation.navigate('Event', event);
+        console.log('clicked', event);
+    }
+    
     return (
 
         <View>
