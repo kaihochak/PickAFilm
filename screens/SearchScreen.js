@@ -16,15 +16,14 @@ export default function SearchScreen() {
 
     const handleSearch = search => {
         console.log('searching for', search);
-        if (search && search.length > 2) {
+        if (search && search.length > 0) {
             setLoading(true);
             searchFilms({
                 query: search,
                 include_adult: false,
                 language: 'en-US',
-                page: '1'
+                page: 1
             }).then(data => {
-                // console.log('got search results', data);
                 setLoading(false);
                 if (data && data.results) setResults(data.results);
             })
@@ -76,7 +75,7 @@ export default function SearchScreen() {
                             contentContainerStyle={{ paddingHorizontal: 15 }}
                             className="space-y-3"
                         >
-                            <Text className="text-white font-semibold ml-1">Results ({results.length})</Text>
+                            {/* <Text className="text-white font-semibold ml-1 ">Results ({results.length})</Text> */}
                             <View className="flex-row justify-between flex-wrap">
                                 {
                                     results.map((item, index) => {
@@ -105,10 +104,7 @@ export default function SearchScreen() {
                     ) : (
                         // no results
                         <View className="flex-row justify-center">
-                            <Image
-                                source={require('../assets/images/poster1.jpg')}
-                                className="h-96 w-96"
-                            />
+                            {/* <Text className="text-white font-semibold ml-1">Results ({results.length})</Text> */}
                         </View>
                     )
             }

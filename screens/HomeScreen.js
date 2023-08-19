@@ -1,103 +1,116 @@
-import { View, Text, TouchableOpacity, ScrollView, ScrollViewBase } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Appearance } from 'react-native';
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
-import { styles } from '../theme';
+import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { MoonIcon, SunIcon } from 'react-native-heroicons/solid';
+import { styles,darkStyles } from '../theme';
 import Watchlist from '../components/watchlist';
 import FilmList from '../components/filmList';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { fetchWatchlist, fetchTopRated, fetchTrending, fetchUpcoming } from '../api/tmdb' 
+import { fetchWatchlist, fetchTopRated, fetchTrending, fetchUpcoming } from '../api/tmdb'
 import Loading from '../components/loading';
-import { Use } from 'react-native-svg';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import EventCardList from '../components/eventCardList';
-// import events from '../constants/index';
+
 
 const ios = Platform.OS === 'ios';
-const baseMargin = ios? 'mb-2': 'mb-3';
+const baseMargin = ios ? 'mb-2' : 'mb-3';
 
 export default function HomeScreen() {
-    
-    // const [events, setEvents] = useState([1,2,3]);
-    const [watchlist, setWatchlist] = useState([]); 
-    const [trending, setTrending] = useState([]); 
-    const [topRated, setTopRated] = useState([]); 
-    const [upcoming, setUpcoming] = useState([]); 
+
+    const [lightMode, toggleLightMode] = useState(false);
+    const [watchlist, setWatchlist] = useState([]); // [
+    const [trending, setTrending] = useState([]);
+    const [topRated, setTopRated] = useState([]);
+    const [upcoming, setUpcoming] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigation = useNavigation();  
+    const navigation = useNavigation();
 
     // call api, fetch data
-    useEffect(()=>{
-        // getEventCardList();
+    useEffect(() => {
         getWatchlist();
         getTrending();
         getTopRated();
         getUpcoming();
-    }  ,[]);
 
-    // fetch data for event list
-    // const getEventCardList = async ()=>{
-    //     const data = [{1,2,3}];
-    //     setEvents(data);
-    //     setLoading(false);
-    // }
+    }, []);
 
     // fetch data for watchlist films
-    const getWatchlist = async ()=>{
+    const getWatchlist = async () => {
         const data = await fetchWatchlist();
-        console.log('got watchlist', data.results.length);
-        if(data && data.results) setWatchlist(data.results);
+        if (data && data.results) setWatchlist(data.results);
         setLoading(false);
     }
 
     // fetch data for trending films
-    const getTrending = async ()=>{
+    const getTrending = async () => {
         const data = await fetchTrending();
-        console.log('got trending', data.results.length);
-        if(data && data.results) setTrending(data.results);
+        if (data && data.results) setTrending(data.results);
         setLoading(false);
     }
 
     // fetch data for top rated films
-    const getTopRated = async ()=>{
+    const getTopRated = async () => {
         const data = await fetchTopRated();
-        console.log('got top rated', data.results.length); 
-        if(data && data.results) setTopRated(data.results);
+        if (data && data.results) setTopRated(data.results);
         setLoading(false);
     }
 
     // fetch data for upcoming films
-    const getUpcoming = async ()=>{
+    const getUpcoming = async () => {
         const data = await fetchUpcoming();
-        console.log('got upcoming', data.results.length);
-        if(data && data.results) setUpcoming(data.results);
+        if (data && data.results) setUpcoming(data.results);
         setLoading(false);
     }
 
     return (
-        <View className="flex-1 bg-neutral-800" >
+        <View className="flex" style={!lightMode?styles.background:darkStyles.background} >
+
             {/* search bar and logo */}
             <SafeAreaView className={baseMargin}>
-                <StatusBar style="light" />
+                <StatusBar style={!lightMode?"light":"dark"} />
 
-                <View className="flex-row justify-between items-center mx-4">
-
-                    {/* Menu */}
-                    {/* to do: make the menu bar able to popout and have selections of function */}
-                    <Bars3CenterLeftIcon size="30" strokeWidth={2} color="white" />
-                    
-                    {/* Logo */}
-                    <Text 
-                        className="text-white text-3xl font-bold">
-                        <Text style={styles.text}>Pick</Text>AFilm
-                    </Text>
+                <View className="flex-row justify-between items-center mx-4 mb-3">
 
                     {/* Search */}
-                    <TouchableOpacity onPress={()=> navigation.navigate('Search')}>
-                        <MagnifyingGlassIcon size="30" strokeWidth={2} color="white" />
+                    <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                        <MagnifyingGlassIcon 
+                            size="30" 
+                            strokeWidth={2}
+                            color={!lightMode?styles.text.color:darkStyles.text.color} 
+                        />
                     </TouchableOpacity>
+
+                    {/* Logo */}
+                    <Text
+                        className="text-white text-3xl font-bold">
+                        <Text 
+                            style={!lightMode?styles.title:darkStyles.title}
+                        >Pick</Text>
+                        <Text 
+                            style={!lightMode?styles.text:darkStyles.text}
+                        >AFilm</Text>
+                    </Text>
+
+                    {/* lightmode button */}
+                    {lightMode ? (
+                        <TouchableOpacity onPress={() => toggleLightMode(!lightMode)}>
+                            <MoonIcon
+                                size="30"
+                                strokeWidth={4}
+                                color={darkStyles.text.color}
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity onPress={() => toggleLightMode(!lightMode)}>
+                            <SunIcon
+                                size="30"
+                                strokeWidth={4}
+                                color={styles.text.color}
+                            />
+                        </TouchableOpacity>
+                    )
+                    }
 
                 </View>
             </SafeAreaView>
@@ -105,33 +118,30 @@ export default function HomeScreen() {
             {/* Film List */}
             {
                 // loading page
-                loading? (
+                loading ? (
                     <Loading />
                 ) : (
-                  
-                    // Film Picker
+
                     // film lists
                     <ScrollView
                         showsVerticalScrollIndicator={false}
-                        contentContainerStyle={{paddingBottom: 10}}
+                        contentContainerStyle={{ paddingBottom: 8 }}
                     >
-
-                        {/* Event List Carousel */}
-                        {/* TO DO - very important in stage 2 */}
-                        <EventCardList title="My Events" />
-
                         {/* Watchlist Films Carousel */}
-                        <Watchlist data={watchlist} />
+                        <Watchlist data={watchlist} isLightMode={lightMode}/>
 
                         {/* Top Rated Films Carousel */}
-                        <FilmList title="Top Rated" data={topRated} />
+                        <FilmList title="Top Rated" data={topRated} isLightMode={lightMode} />
 
                         {/* Trending Films Carousel */}
-                        <FilmList title="Trending" data={trending} />
+                        <FilmList title="Trending" data={trending} isLightMode={lightMode} />
 
                         {/* Upcoming Films Carousel */}
-                        <FilmList title="Upcoming" data={upcoming} />
-                 
+                        <FilmList title="Upcoming" data={upcoming} isLightMode={lightMode} />
+
+                        {/* Spacing */}
+                        <View className="mb-28"></View>
+
                     </ScrollView>
                 )
             }

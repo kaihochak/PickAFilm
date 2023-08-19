@@ -10,8 +10,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ArrowLeftIcon, EyeIcon } from "react-native-heroicons/outline";
-import { EyeIcon as EyeIconSolid } from "react-native-heroicons/solid";
+import { ArrowLeftIcon } from "react-native-heroicons/outline";
+import { MoonIcon, SunIcon } from "react-native-heroicons/solid";
 import { styles, theme } from "../theme";
 import { LinearGradient } from "expo-linear-gradient";
 import Cast from "../components/cast";
@@ -23,7 +23,6 @@ import {
     image500,
     fetchSimilarMovies,
 } from "../api/tmdb";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 var { width, height } = Dimensions.get("window");
 const ios = Platform.OS === "ios";
@@ -31,7 +30,7 @@ const topMargin = ios ? "" : "mt-3";
 
 export default function FilmScreen() {
     const { params: item } = useRoute();
-    const [inWatchlist, toggleWatchlist] = useState(false);
+    const [lightMode, toggleLightMode] = useState(false);
     const navigation = useNavigation();
     const [cast, setCast] = useState([]);
     const [similarFilms, setSimilarFilms] = useState([]);
@@ -61,16 +60,15 @@ export default function FilmScreen() {
     // fetch data for similar films
     const getSimilarFilms = async (id) => {
         const data = await fetchSimilarMovies(id);
-        console.log("got similar films", data.results);
         if (data && data.results) setSimilarFilms(data.results);
     };
 
     return (
         <ScrollView
             contentContainerStyle={{ paddingBottom: 20 }}
-            className="flex-1 bg-neutral-900"
+            style={styles.background}
+            className="flex-1 "
         >
-
             {/* back button and poster */}
             <View className="w-full">
                 <SafeAreaView
@@ -87,14 +85,25 @@ export default function FilmScreen() {
                         <ArrowLeftIcon size="30" strokeWidth={2} color="white" />
                     </TouchableOpacity>
 
-                    {/* watchlist button */}
-                    <TouchableOpacity onPress={() => toggleWatchlist(!inWatchlist)}>
-                        <EyeIcon
-                            size="30"
-                            strokeWidth={2}
-                            color={inWatchlist ? theme.background : "white"}
-                        />
-                    </TouchableOpacity>
+                    {/* lightmode button */}
+                    {lightMode ? (
+                        <TouchableOpacity onPress={() => toggleLightMode(!lightMode)}>
+                            <MoonIcon
+                                size="30"
+                                strokeWidth={4}
+                                color={theme.text}
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity onPress={() => toggleLightMode(!lightMode)}>
+                            <SunIcon
+                                size="30"
+                                strokeWidth={4}
+                                color={theme.text}
+                            />
+                        </TouchableOpacity>
+                    )
+                    }
                 </SafeAreaView>
 
                 {/* poster */}
@@ -109,7 +118,7 @@ export default function FilmScreen() {
                             style={{ width: width, height: height * 0.55 }}
                         />
                         <LinearGradient
-                            colors={["transparent", "rgba(23,23,23,0.8)", "rgba(23,23,23,1)"]}
+                            colors={["transparent", styles.background.backgroundColor]}
                             style={{ width, height: height * 0.4 }}
                             start={{ x: 0.5, y: 0 }}
                             end={{ x: 0.5, y: 1 }}
@@ -159,7 +168,7 @@ export default function FilmScreen() {
             {/* Cast */}
             <View>
                 {
-                    cast.length > 0 &&             
+                    cast.length > 0 &&
                     <Cast navigation={navigation} cast={cast} />
                 }
             </View>
