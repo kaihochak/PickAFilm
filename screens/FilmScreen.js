@@ -12,7 +12,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeftIcon } from "react-native-heroicons/outline";
 import { MoonIcon, SunIcon } from "react-native-heroicons/solid";
-import { styles, theme } from "../theme";
+import { styles, darkStyles } from "../theme";
 import { LinearGradient } from "expo-linear-gradient";
 import Cast from "../components/cast";
 import FilmList from "../components/filmList";
@@ -37,8 +37,8 @@ export default function FilmScreen() {
     const [loading, setLoading] = useState(true);
     const [filmDetails, setFilmDetails] = useState({});
 
+    // call API
     useEffect(() => {
-        // call API
         getFilmDetails(item.id);
         getCast(item.id);
         getSimilarFilms(item.id);
@@ -66,8 +66,8 @@ export default function FilmScreen() {
     return (
         <ScrollView
             contentContainerStyle={{ paddingBottom: 20 }}
-            style={styles.background}
-            className="flex-1 "
+            style={!lightMode ? darkStyles.background : styles.background}
+            className="flex-1"
         >
             {/* back button and poster */}
             <View className="w-full">
@@ -82,7 +82,10 @@ export default function FilmScreen() {
                         onPress={() => navigation.goBack()}
                         className="rounded-xl p-1"
                     >
-                        <ArrowLeftIcon size="30" strokeWidth={2} color="white" />
+                        <ArrowLeftIcon 
+                            size="30" 
+                            strokeWidth={2} 
+                            style={lightMode?styles.text:darkStyles.text} />
                     </TouchableOpacity>
 
                     {/* lightmode button */}
@@ -91,7 +94,7 @@ export default function FilmScreen() {
                             <MoonIcon
                                 size="30"
                                 strokeWidth={4}
-                                color={theme.text}
+                                color={styles.text.color}
                             />
                         </TouchableOpacity>
                     ) : (
@@ -99,7 +102,7 @@ export default function FilmScreen() {
                             <SunIcon
                                 size="30"
                                 strokeWidth={4}
-                                color={theme.text}
+                                color={darkStyles.text.color}
                             />
                         </TouchableOpacity>
                     )
@@ -117,13 +120,24 @@ export default function FilmScreen() {
                             }}
                             style={{ width: width, height: height * 0.55 }}
                         />
-                        <LinearGradient
-                            colors={["transparent", styles.background.backgroundColor]}
-                            style={{ width, height: height * 0.4 }}
-                            start={{ x: 0.5, y: 0 }}
-                            end={{ x: 0.5, y: 1 }}
-                            className="absolute bottom-0"
-                        />
+                        {lightMode ? (
+                            <LinearGradient
+                                colors={["transparent", styles.background.backgroundColor]}
+                                style={{ width, height: height * 0.4 }}
+                                start={{ x: 0.5, y: 0 }}
+                                end={{ x: 0.5, y: 1 }}
+                                className="absolute bottom-0"
+                            />
+                        ) : (
+                            <LinearGradient
+                                colors={["transparent", darkStyles.background.backgroundColor]}
+                                style={{ width, height: height * 0.4 }}
+                                start={{ x: 0.5, y: 0 }}
+                                end={{ x: 0.5, y: 1 }}
+                                className="absolute bottom-0"
+                            />
+                        )
+                        }
                     </View>
                 )}
             </View>

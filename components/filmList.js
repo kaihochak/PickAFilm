@@ -6,7 +6,7 @@ import { fallbackMoviePoster, image185 } from '../api/tmdb';
 
 var { width, height } = Dimensions.get('window');
 
-export default function FilmList({ title, data, isLightMode }) {
+export default function FilmList({ title, data, lightMode }) {
 
     const navigation = useNavigation();
     const handleClick = (item) => {
@@ -19,7 +19,7 @@ export default function FilmList({ title, data, isLightMode }) {
             {/* Title */}
             <View className="flex-row justify-between items-center mx-4 mb-1">
                 <Text className="font-bold text-xl">
-                    <Text style={!isLightMode?styles.text:darkStyles.text}>
+                    <Text style={lightMode?styles.text:darkStyles.text}>
                         {title}
                     </Text>
                 </Text>
@@ -46,7 +46,7 @@ export default function FilmList({ title, data, isLightMode }) {
                                         style={{ width: width * 0.33, height: height * 0.22 }}
                                     />
                                     <Text className="ml-2">
-                                        <Text style={!isLightMode?styles.paragraph:darkStyles.paragraph}>
+                                        <Text style={lightMode?styles.paragraph:darkStyles.paragraph}>
                                             {
                                                 item.title.length > 14 ? item.title.slice(0, 14) + '...' : item.title
                                             }

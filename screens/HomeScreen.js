@@ -17,7 +17,6 @@ const ios = Platform.OS === 'ios';
 const baseMargin = ios ? 'mb-2' : 'mb-3';
 
 export default function HomeScreen() {
-
     const [lightMode, toggleLightMode] = useState(false);
     const [watchlist, setWatchlist] = useState([]); // [
     const [trending, setTrending] = useState([]);
@@ -32,7 +31,6 @@ export default function HomeScreen() {
         getTrending();
         getTopRated();
         getUpcoming();
-
     }, []);
 
     // fetch data for watchlist films
@@ -64,11 +62,11 @@ export default function HomeScreen() {
     }
 
     return (
-        <View className="flex" style={!lightMode?styles.background:darkStyles.background} >
+        <View className="flex" style={lightMode?styles.background:darkStyles.background} >
 
             {/* search bar and logo */}
             <SafeAreaView className={baseMargin}>
-                <StatusBar style={!lightMode?"light":"dark"} />
+                <StatusBar style={lightMode?"dark":"light"} />
 
                 <View className="flex-row justify-between items-center mx-4 mb-3">
 
@@ -77,7 +75,7 @@ export default function HomeScreen() {
                         <MagnifyingGlassIcon 
                             size="30" 
                             strokeWidth={2}
-                            color={!lightMode?styles.text.color:darkStyles.text.color} 
+                            color={lightMode?styles.text.color:darkStyles.text.color} 
                         />
                     </TouchableOpacity>
 
@@ -85,10 +83,10 @@ export default function HomeScreen() {
                     <Text
                         className="text-white text-3xl font-bold">
                         <Text 
-                            style={!lightMode?styles.title:darkStyles.title}
+                            style={lightMode?styles.title:darkStyles.title}
                         >Pick</Text>
                         <Text 
-                            style={!lightMode?styles.text:darkStyles.text}
+                            style={lightMode?styles.text:darkStyles.text}
                         >AFilm</Text>
                     </Text>
 
@@ -98,7 +96,7 @@ export default function HomeScreen() {
                             <MoonIcon
                                 size="30"
                                 strokeWidth={4}
-                                color={darkStyles.text.color}
+                                color={styles.text.color}
                             />
                         </TouchableOpacity>
                     ) : (
@@ -106,7 +104,7 @@ export default function HomeScreen() {
                             <SunIcon
                                 size="30"
                                 strokeWidth={4}
-                                color={styles.text.color}
+                                color={darkStyles.text.color}
                             />
                         </TouchableOpacity>
                     )
@@ -128,16 +126,16 @@ export default function HomeScreen() {
                         contentContainerStyle={{ paddingBottom: 8 }}
                     >
                         {/* Watchlist Films Carousel */}
-                        <Watchlist data={watchlist} isLightMode={lightMode}/>
+                        <Watchlist data={watchlist} lightMode={lightMode}/>
 
                         {/* Top Rated Films Carousel */}
-                        <FilmList title="Top Rated" data={topRated} isLightMode={lightMode} />
+                        <FilmList title="Top Rated" data={topRated} lightMode={lightMode} />
 
                         {/* Trending Films Carousel */}
-                        <FilmList title="Trending" data={trending} isLightMode={lightMode} />
+                        <FilmList title="Trending" data={trending} lightMode={lightMode} />
 
                         {/* Upcoming Films Carousel */}
-                        <FilmList title="Upcoming" data={upcoming} isLightMode={lightMode} />
+                        <FilmList title="Upcoming" data={upcoming} lightMode={lightMode} />
 
                         {/* Spacing */}
                         <View className="mb-28"></View>
