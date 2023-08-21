@@ -2,15 +2,26 @@ import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, TouchableWi
 import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { XMarkIcon } from 'react-native-heroicons/outline'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { fallbackMoviePoster, image185, searchFilms } from '../api/tmdb'
 import { debounce } from 'lodash'
 import Loading from '../components/loading'
+import { darkStyles, styles } from '../theme'
 
 const { width, height } = Dimensions.get('window');
 
 export default function SearchScreen() {
+
     const navigation = useNavigation();
+    const route = useRoute();
+    const lightMode = route.params.isLightMode;
+    const handleClick = (item) => {
+        navigation.push('Film', {
+            item: item,
+            isLightMode: lightMode
+        });
+    }
+
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState([])
 
@@ -37,7 +48,7 @@ export default function SearchScreen() {
 
     return (
 
-        <SafeAreaView className="bg-neutral-800 flex-1">
+        <SafeAreaView className="flex-1" style={lightMode?styles.background:darkStyles.background}>
 
             {/* search input */}
             <View
@@ -82,7 +93,7 @@ export default function SearchScreen() {
                                         return (
                                             <TouchableWithoutFeedback
                                                 key={index}
-                                                onPress={() => navigation.push('Film', item)}>
+                                                onPress={() => handleClick(item)}>
                                                 <View className="space-y-2 mb-4">
                                                     <Image
                                                         source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}

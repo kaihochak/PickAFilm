@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, TouchableWithoutFeedback, RefreshControl } from 'react-native';
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
@@ -24,6 +24,7 @@ export default function HomeScreen() {
     const [topRated, setTopRated] = useState([]);
     const [upcoming, setUpcoming] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
 
     // call api, fetch data
     useEffect(() => {
@@ -61,6 +62,22 @@ export default function HomeScreen() {
         setLoading(false);
     }
 
+    // go to search screen
+    const goToSearch = () => {
+        console.log(lightMode);
+        navigation.push('Search', {
+            isLightMode: lightMode
+        });
+    }
+
+    // refresh control
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 800);
+    }, []);
+
     return (
         <View className="flex" style={lightMode ? styles.background : darkStyles.background} >
 
@@ -71,7 +88,7 @@ export default function HomeScreen() {
                 <View className="flex-row justify-between items-center mx-4 mb-3">
 
                     {/* Search */}
-                    <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                    <TouchableOpacity onPress={goToSearch}>
                         <MagnifyingGlassIcon
                             size="30"
                             strokeWidth={2}
@@ -80,10 +97,12 @@ export default function HomeScreen() {
                     </TouchableOpacity>
 
                     {/* Logo */}
-                    <Text className="text-3xl font-bold">
-                        <Text style={lightMode ? styles.title : darkStyles.title}>Pick</Text>
-                        <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
-                    </Text>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Home')}>
+                        <Text className="text-3xl font-bold" >
+                            <Text style={lightMode ? styles.title : darkStyles.title}>Pick</Text>
+                            <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
+                        </Text>
+                    </TouchableWithoutFeedback>
 
                     {/* lightmode button */}
                     {lightMode ? (
@@ -118,6 +137,9 @@ export default function HomeScreen() {
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ paddingBottom: 8 }}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
                     >
                         {/* Watchlist Films Carousel */}
                         <Watchlist data={watchlist} lightMode={lightMode} />

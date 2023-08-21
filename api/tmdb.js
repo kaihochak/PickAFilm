@@ -25,8 +25,8 @@ export const image342 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w
 export const image185 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w185' + posterPath : null;
 
 // fallback images 
-export const fallbackMoviePoster = 'https://img.myloview.com/stickers/white-laptop-screen-with-hd-video-technology-icon-isolated-on-grey-background-abstract-circle-random-dots-vector-illustration-400-176057922.jpg';
-export const fallbackPersonImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmUiF-YGjavA63_Au8jQj7zxnFxS_Ay9xc6pxleMqCxH92SzeNSjBTwZ0l61E4B3KTS7o&usqp=CAU';
+export const fallbackMoviePoster = require("../assets/images/fallbackMoviePoster.jpg");
+export const fallbackPersonImage = require("../assets/images/fallbackPersonImage.jpg");
 
 // API CALL Method 
 const apiCall = async (endpoint, params) => {
@@ -60,14 +60,14 @@ export const fetchUpcoming = () => {
 }
 
 // film screen apis
-export const fetchFilmDetails = (id) => {
-    return apiCall(movieDetailsEndpoint(id));
+export const fetchFilmDetails = (FilmId) => {
+    return apiCall(movieDetailsEndpoint(FilmId));
 }
-export const fetchCast = (movieId) => {
-    return apiCall(movieCreditsEndpoint(movieId));
+export const fetchCast = (FilmId) => {
+    return apiCall(movieCreditsEndpoint(FilmId));
 }
-export const fetchSimilarMovies = (movieId) => {
-    return apiCall(similarMoviesEndpoint(movieId));
+export const fetchSimilarMovies = (FilmId) => {
+    return apiCall(similarMoviesEndpoint(FilmId));
 }
 
 // person screen apis

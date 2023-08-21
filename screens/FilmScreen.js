@@ -7,6 +7,8 @@ import {
     Platform,
     Image,
     useWindowDimensions,
+    TouchableWithoutFeedback,
+    RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { NavigationContainer, useNavigation, useRoute } from "@react-navigation/native";
@@ -39,9 +41,12 @@ export default function FilmScreen() {
     const [similarFilms, setSimilarFilms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filmDetails, setFilmDetails] = useState({});
+    const [refreshing, setRefreshing] = useState(false);
+
 
     // call API
     useEffect(() => {
+        console.log(item);
         getFilmDetails(item.id);
         getCast(item.id);
         getSimilarFilms(item.id);
@@ -66,6 +71,14 @@ export default function FilmScreen() {
         if (data && data.results) setSimilarFilms(data.results);
     };
 
+    // refresh control
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 800);
+    }, []);
+
     return (
 
         <View className="flex" style={lightMode ? styles.background : darkStyles.background} >
@@ -84,11 +97,14 @@ export default function FilmScreen() {
                     </TouchableOpacity>
 
                     {/* Logo */}
-                    <Text className="text-3xl font-bold">
-                        <Text style={lightMode ? styles.title : darkStyles.title}>Pick</Text>
-                        <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
-                    </Text>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Home')}>
+                        <Text className="text-3xl font-bold" >
+                            <Text style={lightMode ? styles.title : darkStyles.title}>Pick</Text>
+                            <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
+                        </Text>
+                    </TouchableWithoutFeedback>
 
+                    {/* Add Button */}
                     <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                         <PlusIcon
                             size="30"
@@ -96,9 +112,6 @@ export default function FilmScreen() {
                             style={lightMode ? styles.text : darkStyles.text}
                         />
                     </TouchableOpacity>
-
-                    {/* Spacing */}
-                    {/* <View className="w-10"></View> */}
 
                 </View>
             </SafeAreaView>
@@ -112,6 +125,9 @@ export default function FilmScreen() {
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ paddingBottom: 8 }}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
                     >
                         <View>
                             <Image
@@ -121,7 +137,7 @@ export default function FilmScreen() {
                                 style={{ width: width, height: height * 0.55 }}
                             />
                             <LinearGradient
-                                colors={["transparent", lightMode?styles.background.backgroundColor:darkStyles.background.backgroundColor]}
+                                colors={["transparent", lightMode ? styles.background.backgroundColor : darkStyles.background.backgroundColor]}
                                 style={{ width, height: height * 0.4 }}
                                 start={{ x: 0.5, y: 0 }}
                                 end={{ x: 0.5, y: 1 }}
@@ -173,7 +189,7 @@ export default function FilmScreen() {
 
 
                             {/* genres  */}
-                            <View className="flex-row justify-center mx-4 space-x-2">
+                            <View className="flex-row flex-wrap justify-center mx-4 space-x-2">
                                 {filmDetails?.genres?.map((genre, index) => {
                                     let lastOne = index + 1 == filmDetails.genres.length;
                                     return (

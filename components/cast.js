@@ -1,7 +1,9 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, Dimensions } from 'react-native'
 import React from 'react'
 import { fallbackPersonImage, image342 } from '../api/tmdb';
 import { darkStyles, styles } from '../theme';
+
+var { width, height } = Dimensions.get('window');
 
 export default function Cast({cast, navigation, lightMode}) {
 
@@ -12,31 +14,30 @@ export default function Cast({cast, navigation, lightMode}) {
         <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{paddingHorizontal: 25 }}
+            contentContainerStyle={{paddingHorizontal: 5 }}
         >
             {
                 cast && cast.map((person, index) => {
                     return (
                         <TouchableOpacity 
                             key={index} 
-                            className="mr-4 px-1 items-center"
+                            className="mr-2 px-1 items-center"
                             onPress={() => navigation.navigate('Person', {person})}
                         >
                             <View
-                                className="overflow-hidden 
-                                            rounded-full items-center 
-                                            border border-neutral-300" 
+                                className="overflow-hidden items-center " 
+                                style={{height: height * 0.18, width: width * 0.27}}
                             >
                                 <Image
-                                    className="rounded-full h-28 w-28"
-                                    source={{uri: image342(person?.profile_path || fallbackPersonImage )}}
+                                    className="h-36 w-24 rounded-xl"
+                                    source={{uri: image342(person?.profile_path || require("../assets/images/fallbackPersonImage.jpg") )}}
                                 />
                             </View>
-                            <Text className="text-s mt-1 pt-2" style={lightMode?styles.paragraph.text:darkStyles.paragraph}>
-                                { person?.character.length > 18? person?.character.slice(0, 18) + '...': person?.character }
+                            <Text className="text-s mt-1 pt-1" style={lightMode?styles.paragraph.text:darkStyles.paragraph}>
+                                { person?.character.length > 14? person?.character.slice(0, 14) + '...': person?.character }
                             </Text>
                             <Text className="text-xs mt-1" style={lightMode?styles.paragraph.text:darkStyles.paragraph}>
-                                { person?.original_name.length > 20? person?.original_name.slice(0, 20) + '...': person?.original_name }
+                                { person?.original_name.length > 16? person?.original_name.slice(0, 16) + '...': person?.original_name }
                             </Text>
                         </TouchableOpacity>
                     )

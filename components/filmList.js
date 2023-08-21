@@ -6,13 +6,13 @@ import { fallbackMoviePoster, image185 } from '../api/tmdb';
 
 var { width, height } = Dimensions.get('window');
 
-export default function FilmList({ title, data, lightMode, callBack }) {
+export default function FilmList({ title, data, lightMode }) {
 
     const navigation = useNavigation();
     const handleClick = (item) => {
-        navigation.navigate('Film', {
+        navigation.push('Film', {
             item: item,
-            callBack: callBack
+            isLightMode: lightMode
         });
     }
 

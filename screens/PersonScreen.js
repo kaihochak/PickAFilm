@@ -81,26 +81,27 @@ export default function PersonScreen() {
                         contentContainerStyle={{ paddingBottom: 8 }}
                     >
                         <View
-                            className="flex-row justify-center items-center pt-7 pb-2"
+                            className="flex-row justify-center items-center pt-10 pb-4"
                             style={{
-                                shadowColor: 'gray',
-                                shadowRadius: 10,
+                                shadowColor: "#52006A",
+                                shadowRadius: 30,
                                 shadowOffset: { width: 5, height: 5 },
-                                shadowOpacity: 5,
+                                shadowOpacity: 0.2,
                             }}
                         >
+                            {/* h-72 w-72 */}
                             <View
-                                className="overflow-hidden h-72 w-72 border-neutral-500 border-2">
+                                className="overflow-hidden rounded border-neutral-500 border-1">
                                 <Image
-                                    source={{ uri: image342(person?.profile_path) || fallbackPersonImage }}
-                                    style={{ height: height * 0.43, width: width * 0.74 }}
+                                    source={{ uri: image342(person?.profile_path) || require('../assets/images/fallbackPersonImage.jpg') }}
+                                    style={{ height: height * 0.5, width: width * 0.75 }}
                                 />
                             </View>
                         </View>
 
                         {/* Name & Place*/}
                         <View className="mt-6">
-                            <Text className="text-3xl text-white font-bold text-center">
+                            <Text className="text-3xl font-bold text-center">
                                 {lightMode ? (
                                     <Text style={styles.title}>{person?.name}</Text>
                                 ) : (
@@ -108,7 +109,7 @@ export default function PersonScreen() {
                                 )
                                 }
                             </Text>
-                            <Text className="text-neutral-500 text-base text-center">
+                            <Text className="text-base text-center">
                                 {lightMode ? (
                                     <Text style={styles.text}>{person?.place_of_birth}</Text>
                                 ) : (
@@ -120,42 +121,49 @@ export default function PersonScreen() {
                         </View>
 
                         {/* Birthday & Popularity */}
-                        <View className="mx-3 p-4 mt-2 flex-row justify-between items-center">
-                            
+                        <View className="flex-row flex-wrap px-5 mt-2 py-6">
                             {/* Left Box */}
-                            <View className="px-10 items-center">
-                                <Text className="font-semibold" style={lightMode?style.text:darkStyles.text}>
+                            <View className="w-1/2 px-10 items-center">
+                                <Text className="font-semibold pb-1" style={lightMode ? style.text : darkStyles.text}>
                                     Birthday
                                 </Text>
-                                <Text className="text-sm" style={lightMode?style.paragraph:darkStyles.paragraph}>
+                                <Text className="text-sm" style={lightMode ? style.paragraph : darkStyles.paragraph}>
                                     {person?.birthday}
                                 </Text>
                             </View>
-
                             {/* Right Box */}
-                            <View className="px-10 items-center">
-                                <Text className="font-semibold" style={lightMode?style.text:darkStyles.text}>
+                            <View className="w-1/2 px-10 items-center">
+                                <Text className="font-semibold pb-1" style={lightMode ? style.text : darkStyles.text}>
                                     Popularity
                                 </Text>
-                                <Text className="text-sm" style={lightMode?style.paragraph:darkStyles.paragraph}>
+                                <Text className="text-sm" style={lightMode ? style.paragraph : darkStyles.paragraph}>
                                     {person?.popularity?.toFixed(2)} %
                                 </Text>
                             </View>
-
                         </View>
-                        
+
                         {/* Biography */}
-                        <View className="my-6 mx-4 space-y-2">
-                            <Text className="text-white text-lg">Biography</Text>
-                            <Text className="text-neutral-400 tracking-wide">
-                                {
-                                    person?.biography ? person.biography : 'N/A'
+                        <View className="mx-4">
+                            <Text className="font-bold text-xl mb-4" style={lightMode ? styles.text : darkStyles.text}>
+                                Biography
+                            </Text>
+                            <Text className="mx-2 tracking-wide leading-6 font-normal mb-8">
+                                {lightMode ? (
+                                    <Text style={styles.paragraph}>
+                                        {person?.biography ? person.biography : 'N/A'}
+                                    </Text>
+                                ) : (
+                                    <Text style={darkStyles.paragraph}>
+                                        {person?.biography ? person.biography : 'N/A'}
+                                    </Text>
+                                )
                                 }
                             </Text>
+
                         </View>
 
                         {/* person movies */}
-                        <FilmList title={'Films'} hideSeeAll={true} data={personFilms} />
+                        <FilmList title={'Filmography'} hideSeeAll={true} data={personFilms} />
 
                     </ScrollView>
 
