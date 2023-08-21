@@ -4,7 +4,6 @@ import HomeScreen from "../screens/HomeScreen";
 import FilmScreen from "../screens/FilmScreen";
 import PersonScreen from "../screens/PersonScreen";
 import SearchScreen from "../screens/SearchScreen";
-import EventScreen from "../screens/EventScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +15,6 @@ export default function AppNavigation() {
                 <Stack.Screen name="Film" options={{headerShown: false}} component={FilmScreen} />
                 <Stack.Screen name="Person" options={{headerShown: false}} component={PersonScreen} />
                 <Stack.Screen name="Search" options={{headerShown: false}} component={SearchScreen} />
-                <Stack.Screen name="Event" options={{headerShown: false}} component={EventScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

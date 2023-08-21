@@ -10,12 +10,15 @@ var { width, height } = Dimensions.get('window');
 export default function Watchlist({ data, lightMode }) {
     const navigation = useNavigation();
     const handleClick = (item) => {
-        navigation.navigate('Film', item);
+        navigation.navigate('Film', {
+            item: item, 
+            isLightMode: lightMode
+        });
     }
     return (
         <View className="mb-8">
-            <Text className="font-bold text-xl mx-4 mb-5">
-                <Text style={lightMode?styles.text:darkStyles.text}>Watchlist</Text>
+            <Text className="font-bold text-xl mx-4 mb-5" style={lightMode?styles.text:darkStyles.text}>
+                Watchlist
             </Text>
             <Carousel
                 data={data}

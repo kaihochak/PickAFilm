@@ -6,17 +6,18 @@ import {
     Dimensions,
     Platform,
     Image,
+    useWindowDimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ArrowLeftIcon } from "react-native-heroicons/outline";
-import { MoonIcon, SunIcon } from "react-native-heroicons/solid";
+import { NavigationContainer, useNavigation, useRoute } from "@react-navigation/native";
+import { SafeAreaView } from "react-native";
+import { ArrowLeftIcon, PlusIcon } from "react-native-heroicons/outline";
 import { styles, darkStyles } from "../theme";
 import { LinearGradient } from "expo-linear-gradient";
 import Cast from "../components/cast";
 import FilmList from "../components/filmList";
 import Loading from "../components/loading";
+import { TabView, SceneMap } from 'react-native-tab-view';
 import {
     fetchFilmDetails,
     fetchCast,
@@ -26,12 +27,14 @@ import {
 
 var { width, height } = Dimensions.get("window");
 const ios = Platform.OS === "ios";
-const topMargin = ios ? "" : "mt-3";
 
 export default function FilmScreen() {
-    const { params: item } = useRoute();
-    const [lightMode, toggleLightMode] = useState(false);
+
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const item = route.params.item;
+    const lightMode = route.params.isLightMode;
     const [cast, setCast] = useState([]);
     const [similarFilms, setSimilarFilms] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -64,136 +67,156 @@ export default function FilmScreen() {
     };
 
     return (
-        <ScrollView
-            contentContainerStyle={{ paddingBottom: 20 }}
-            style={!lightMode ? darkStyles.background : styles.background}
-            className="flex-1"
-        >
-            {/* back button and poster */}
-            <View className="w-full">
-                <SafeAreaView
-                    className={
-                        "absolute z-20 w-full flex-row justify-between items-center px-4" +
-                        topMargin
-                    }
-                >
+
+        <View className="flex" style={lightMode ? styles.background : darkStyles.background} >
+
+            {/* back button and title */}
+            <SafeAreaView >
+                <View className="flex-row justify-between items-center mx-4 mb-3">
+
                     {/* back button */}
-                    <TouchableOpacity
-                        onPress={() => navigation.goBack()}
-                        className="rounded-xl p-1"
-                    >
-                        <ArrowLeftIcon 
-                            size="30" 
-                            strokeWidth={2} 
-                            style={lightMode?styles.text:darkStyles.text} />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <ArrowLeftIcon
+                            size="30"
+                            strokeWidth={3}
+                            style={lightMode ? styles.text : darkStyles.text}
+                        />
                     </TouchableOpacity>
 
-                    {/* lightmode button */}
-                    {lightMode ? (
-                        <TouchableOpacity onPress={() => toggleLightMode(!lightMode)}>
-                            <MoonIcon
-                                size="30"
-                                strokeWidth={4}
-                                color={styles.text.color}
-                            />
-                        </TouchableOpacity>
-                    ) : (
-                        <TouchableOpacity onPress={() => toggleLightMode(!lightMode)}>
-                            <SunIcon
-                                size="30"
-                                strokeWidth={4}
-                                color={darkStyles.text.color}
-                            />
-                        </TouchableOpacity>
-                    )
-                    }
-                </SafeAreaView>
+                    {/* Logo */}
+                    <Text className="text-3xl font-bold">
+                        <Text style={lightMode ? styles.title : darkStyles.title}>Pick</Text>
+                        <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
+                    </Text>
 
-                {/* poster */}
-                {loading ? (
+                    <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                        <PlusIcon
+                            size="30"
+                            strokeWidth={3}
+                            style={lightMode ? styles.text : darkStyles.text}
+                        />
+                    </TouchableOpacity>
+
+                    {/* Spacing */}
+                    {/* <View className="w-10"></View> */}
+
+                </View>
+            </SafeAreaView>
+
+            {/* loading page */}
+            {
+                loading ? (
                     <Loading />
                 ) : (
-                    <View>
-                        <Image
-                            source={{
-                                uri: image500(item.poster_path) || fallbackMoviePoster,
-                            }}
-                            style={{ width: width, height: height * 0.55 }}
-                        />
-                        {lightMode ? (
+
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{ paddingBottom: 8 }}
+                    >
+                        <View>
+                            <Image
+                                source={{
+                                    uri: image500(item.poster_path) || fallbackMoviePoster,
+                                }}
+                                style={{ width: width, height: height * 0.55 }}
+                            />
                             <LinearGradient
-                                colors={["transparent", styles.background.backgroundColor]}
+                                colors={["transparent", lightMode?styles.background.backgroundColor:darkStyles.background.backgroundColor]}
                                 style={{ width, height: height * 0.4 }}
                                 start={{ x: 0.5, y: 0 }}
                                 end={{ x: 0.5, y: 1 }}
                                 className="absolute bottom-0"
                             />
-                        ) : (
-                            <LinearGradient
-                                colors={["transparent", darkStyles.background.backgroundColor]}
-                                style={{ width, height: height * 0.4 }}
-                                start={{ x: 0.5, y: 0 }}
-                                end={{ x: 0.5, y: 1 }}
-                                className="absolute bottom-0"
-                            />
-                        )
-                        }
-                    </View>
-                )}
-            </View>
+                        </View>
 
-            {/* Film Information */}
-            <View style={{ marginTop: -(height * 0.09) }} className="space-y-3">
-                {/* title */}
-                <Text className="text-white text-center text-3xl font-bold tracking-widest">
-                    {filmDetails?.title}
-                </Text>
-
-                {/* status, release year, runtime */}
-                {filmDetails?.id ? (
-                    <Text className="text-neutral-400 font-semibold text-base text-center">
-                        {filmDetails?.status} •{" "}
-                        {filmDetails?.release_date?.split("-")[0] || "N/A"} •{" "}
-                        {filmDetails?.runtime} min
-                    </Text>
-                ) : null}
-
-                {/* genres  */}
-                <View className="flex-row justify-center mx-4 space-x-2">
-                    {filmDetails?.genres?.map((genre, index) => {
-                        let showDot = index + 1 != filmDetails.genres.length;
-                        return (
-                            <Text
-                                key={index}
-                                className="text-neutral-400 font-semibold text-base text-center"
-                            >
-                                {genre?.name} {showDot ? "•" : null}
+                        {/* Film Information */}
+                        <View style={{ marginTop: -(height * 0.1) }} className="space-y-3">
+                            {/* title */}
+                            <Text className="text-center text-3xl font-bold tracking-widest">
+                                {lightMode ? (
+                                    <Text style={styles.text}>{filmDetails?.title}</Text>
+                                ) : (
+                                    <Text style={darkStyles.text}>{filmDetails?.title}</Text>
+                                )
+                                }
                             </Text>
-                        );
-                    })}
-                </View>
 
-                {/* description */}
-                <Text className="text-neutral-400 mx-4 tracking-wide">
-                    {filmDetails?.overview}
-                </Text>
-            </View>
+                            {/* release year, runtime */}
+                            {filmDetails?.id ? (
+                                <Text className="font-normal text-base text-center">
+                                    {lightMode ? (
+                                        <Text style={styles.paragraph}>
+                                            {filmDetails?.release_date?.split("-")[0] || "N/A"}{" | "}{filmDetails?.runtime} min
+                                        </Text>
+                                    ) : (
+                                        <Text style={darkStyles.paragraph}>
+                                            {filmDetails?.release_date?.split("-")[0] || "N/A"}{" | "}{filmDetails?.runtime} min
+                                        </Text>
+                                    )
+                                    }
+                                </Text>
+                            ) : null}
 
-            {/* Cast */}
-            <View>
-                {
-                    cast.length > 0 &&
-                    <Cast navigation={navigation} cast={cast} />
-                }
-            </View>
+                            {/* description */}
+                            <Text className="mx-8 tracking-wide leading-6 font-normal">
+                                {lightMode ? (
+                                    <Text style={styles.paragraph}>
+                                        {filmDetails?.overview}
+                                    </Text>
+                                ) : (
+                                    <Text style={darkStyles.paragraph}>
+                                        {filmDetails?.overview}
+                                    </Text>
+                                )
+                                }
+                            </Text>
 
-            {/* Similar Films */}
-            <View className="mt-4">
-                {
-                    similarFilms.length > 0 &&
-                    <FilmList title="Similar Films" hideSeeAll={true} data={similarFilms} />
-                }
-            </View>
-        </ScrollView>
-    );
+
+                            {/* genres  */}
+                            <View className="flex-row justify-center mx-4 space-x-2">
+                                {filmDetails?.genres?.map((genre, index) => {
+                                    let lastOne = index + 1 == filmDetails.genres.length;
+                                    return (
+                                        <Text className="font-light text-sm text-center">
+                                            {lightMode ? (
+                                                <Text key={index} style={styles.paragraph} >
+                                                    {genre?.name}{lastOne ? null : " /"}
+                                                </Text>
+                                            ) : (
+                                                <Text key={index} style={darkStyles.paragraph}>
+                                                    {genre?.name}{lastOne ? null : " /"}
+                                                </Text>
+                                            )}
+                                        </Text>
+                                    );
+                                })}
+                            </View>
+
+
+                        </View>
+
+                        {/* Cast */}
+                        <View >
+                            {
+                                cast.length > 0 &&
+                                <Cast navigation={navigation} cast={cast} lightMode={lightMode} />
+                            }
+                        </View>
+
+                        {/* Similar Films */}
+                        <View className="mt-2">
+                            {
+                                similarFilms.length > 0 &&
+                                <FilmList title="Similar Films" hideSeeAll={true} data={similarFilms} lightMode={lightMode} />
+                            }
+                        </View>
+
+                        {/* Spacing */}
+                        <View className="mb-28"></View>
+
+                    </ScrollView>
+                )
+            }
+        </View>
+    )
 }

@@ -6,11 +6,14 @@ import { fallbackMoviePoster, image185 } from '../api/tmdb';
 
 var { width, height } = Dimensions.get('window');
 
-export default function FilmList({ title, data, lightMode }) {
+export default function FilmList({ title, data, lightMode, callBack }) {
 
     const navigation = useNavigation();
     const handleClick = (item) => {
-        navigation.navigate('Film', item);
+        navigation.navigate('Film', {
+            item: item,
+            callBack: callBack
+        });
     }
 
     return (
@@ -19,7 +22,7 @@ export default function FilmList({ title, data, lightMode }) {
             {/* Title */}
             <View className="flex-row justify-between items-center mx-4 mb-1">
                 <Text className="font-bold text-xl">
-                    <Text style={lightMode?styles.text:darkStyles.text}>
+                    <Text style={lightMode ? styles.text : darkStyles.text}>
                         {title}
                     </Text>
                 </Text>
@@ -39,18 +42,14 @@ export default function FilmList({ title, data, lightMode }) {
                                 key={index}
                                 onPress={() => handleClick(item)} // bring to filmScreen
                             >
-                                <View className="space-y-3 mr-4">
+                                <View className="space-y-2 mr-4">
                                     <Image
                                         source={{ uri: image185(item.poster_path) } || fallbackMoviePoster}
                                         className="rounded-3xl"
                                         style={{ width: width * 0.33, height: height * 0.22 }}
                                     />
-                                    <Text className="ml-2">
-                                        <Text style={lightMode?styles.paragraph:darkStyles.paragraph}>
-                                            {
-                                                item.title.length > 14 ? item.title.slice(0, 14) + '...' : item.title
-                                            }
-                                        </Text>
+                                    <Text className="ml-1 text-sm font-medium" style={lightMode ? styles.paragraph : darkStyles.paragraph}>
+                                        {item.title.length > 14 ? item.title.slice(0, 14) + '...' : item.title}
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>
