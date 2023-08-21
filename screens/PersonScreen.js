@@ -10,12 +10,15 @@ import FilmList from '../components/filmList';
 import { style } from 'deprecated-react-native-prop-types/DeprecatedViewPropTypes';
 
 const ios = Platform.OS == 'ios';
-const verticalMargin = ios ? '' : ' my-3';
+// const verticalMargin = ios ? '' : ' my-3';
 var { width, height } = Dimensions.get('window');
 
 export default function PersonScreen() {
-    const { params: item, lightMode } = useRoute();
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const item = route.params.item;
+    const lightMode = route.params.isLightMode;
 
     const [person, setPerson] = useState({});
     const [personFilms, setPersonFilms] = useState([]);
@@ -23,9 +26,11 @@ export default function PersonScreen() {
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
+        console.log("item:",item);
+        console.log(lightMode);
         setLoading(true);
-        getPersonDetails(item?.person?.id);
-        getPersonFilms(item?.person?.id);
+        getPersonDetails(item.id);
+        getPersonFilms(item.id);
     }, [item]);
 
     const getPersonDetails = async id => {
@@ -76,7 +81,7 @@ export default function PersonScreen() {
                             <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
                         </Text>
                     </TouchableWithoutFeedback>
-                    
+
                     {/* Spacing */}
                     <View className="w-10"></View>
 
@@ -98,20 +103,17 @@ export default function PersonScreen() {
                         <View
                             className="flex-row justify-center items-center pt-10 pb-4"
                             style={{
-                                shadowColor: "#FFFFFF",
-                                shadowRadius: 50,
-                                shadowOffset: { width: 2, height: 3 },
-                                shadowOpacity: 0.5,
+                                shadowColor: "#ebebeb",
+                                shadowRadius: 20,
+                                shadowOffset: { width: 1, height: 2},
+                                shadowOpacity: 0.3,
                             }}
                         >
-                            {/* h-72 w-72 */}
-                            <View
-                                className="overflow-hidden rounded border-neutral-500 border-1">
-                                <Image
-                                    source={{ uri: image342(person?.profile_path) || require('../assets/images/fallbackPersonImage.jpg') }}
-                                    style={{ height: height * 0.5, width: width * 0.75 }}
-                                />
-                            </View>
+                            <Image
+                                className="overflow-hidden rounded-xl border-neutral-300 border-1"
+                                source={{ uri: image342(person?.profile_path) || require('../assets/images/fallbackPersonImage.jpg') }}
+                                style={{ height: height * 0.5, width: width * 0.75 }}
+                            />
                         </View>
 
                         {/* Name & Place*/}
@@ -180,7 +182,7 @@ export default function PersonScreen() {
                         <FilmList title={'Filmography'} hideSeeAll={true} data={personFilms} />
 
                         {/* Spacing */}
-                        <View className="mb-28"></View> 
+                        <View className="mb-28"></View>
                     </ScrollView>
 
                 )

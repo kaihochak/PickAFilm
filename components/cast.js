@@ -5,45 +5,53 @@ import { darkStyles, styles } from '../theme';
 
 var { width, height } = Dimensions.get('window');
 
-export default function Cast({cast, navigation, lightMode}) {
+export default function Cast({ cast, navigation, lightMode }) {
 
-  return (
-    <View className="my-6">
-        {/* Title */}
-        <Text className="font-bold text-xl mx-4 mb-5" style={lightMode?styles.text:darkStyles.text}>Cast</Text> 
-        <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{paddingHorizontal: 5 }}
-        >
-            {
-                cast && cast.map((person, index) => {
-                    return (
-                        <TouchableOpacity 
-                            key={index} 
-                            className="mr-2 px-1 items-center"
-                            onPress={() => navigation.navigate('Person', {person})}
-                        >
-                            <View
-                                className="overflow-hidden items-center " 
-                                style={{height: height * 0.18, width: width * 0.27}}
+    const handleClick = (person) => {
+        navigation.navigate('Person', {
+            item: person,
+            isLightMode: lightMode
+        });
+    }
+
+
+    return (
+        <View className="my-6">
+            {/* Title */}
+            <Text className="font-bold text-xl mx-4 mb-5" style={lightMode ? styles.text : darkStyles.text}>Cast</Text>
+            <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 5 }}
+            >
+                {
+                    cast && cast.map((person, index) => {
+                        return (
+                            <TouchableOpacity
+                                key={index}
+                                className="mr-2 px-1 items-center"
+                                onPress={()=>handleClick(person)}
                             >
-                                <Image
-                                    className="h-36 w-24 rounded-xl"
-                                    source={{uri: image342(person?.profile_path || require("../assets/images/fallbackPersonImage.jpg") )}}
-                                />
-                            </View>
-                            <Text className="text-s mt-1 pt-1" style={lightMode?styles.paragraph.text:darkStyles.paragraph}>
-                                { person?.character.length > 14? person?.character.slice(0, 14) + '...': person?.character }
-                            </Text>
-                            <Text className="text-xs mt-1" style={lightMode?styles.paragraph.text:darkStyles.paragraph}>
-                                { person?.original_name.length > 16? person?.original_name.slice(0, 16) + '...': person?.original_name }
-                            </Text>
-                        </TouchableOpacity>
-                    )
-                })
-            }
-        </ScrollView>
-    </View>
-  )
+                                <View
+                                    className="overflow-hidden items-center "
+                                    style={{ height: height * 0.18, width: width * 0.27 }}
+                                >
+                                    <Image
+                                        className="h-36 w-24 rounded-xl"
+                                        source={{ uri: image342(person?.profile_path || require("../assets/images/fallbackPersonImage.jpg")) }}
+                                    />
+                                </View>
+                                <Text className="text-s mt-1 pt-1" style={lightMode ? styles.paragraph.text : darkStyles.paragraph}>
+                                    {person?.character.length > 14 ? person?.character.slice(0, 14) + '...' : person?.character}
+                                </Text>
+                                <Text className="text-xs mt-1" style={lightMode ? styles.paragraph.text : darkStyles.paragraph}>
+                                    {person?.original_name.length > 16 ? person?.original_name.slice(0, 16) + '...' : person?.original_name}
+                                </Text>
+                            </TouchableOpacity>
+                        )
+                    })
+                }
+            </ScrollView>
+        </View>
+    )
 }
