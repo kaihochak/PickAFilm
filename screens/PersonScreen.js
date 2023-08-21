@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, Platform, Dimensions, ScrollView } from 'react-native'
+import { View, Text, Image, TouchableOpacity, Platform, Dimensions, ScrollView, RefreshControl, TouchableWithoutFeedback } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ArrowLeftIcon } from 'react-native-heroicons/outline'
 import { SafeAreaView } from 'react-native';
@@ -20,6 +20,7 @@ export default function PersonScreen() {
     const [person, setPerson] = useState({});
     const [personFilms, setPersonFilms] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -42,6 +43,15 @@ export default function PersonScreen() {
         }
     }
 
+
+    // refresh control
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 800);
+    }, []);
+
     return (
 
         <View className="flex" style={lightMode ? styles.background : darkStyles.background} >
@@ -60,11 +70,13 @@ export default function PersonScreen() {
                     </TouchableOpacity>
 
                     {/* Logo */}
-                    <Text className="text-3xl font-bold">
-                        <Text style={lightMode ? styles.title : darkStyles.title}>Pick</Text>
-                        <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
-                    </Text>
-
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Home')}>
+                        <Text className="text-3xl font-bold" >
+                            <Text style={lightMode ? styles.title : darkStyles.title}>Pick</Text>
+                            <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
+                        </Text>
+                    </TouchableWithoutFeedback>
+                    
                     {/* Spacing */}
                     <View className="w-10"></View>
 
@@ -79,14 +91,17 @@ export default function PersonScreen() {
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ paddingBottom: 8 }}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
                     >
                         <View
                             className="flex-row justify-center items-center pt-10 pb-4"
                             style={{
-                                shadowColor: "#52006A",
-                                shadowRadius: 30,
-                                shadowOffset: { width: 5, height: 5 },
-                                shadowOpacity: 0.2,
+                                shadowColor: "#FFFFFF",
+                                shadowRadius: 50,
+                                shadowOffset: { width: 2, height: 3 },
+                                shadowOpacity: 0.5,
                             }}
                         >
                             {/* h-72 w-72 */}
@@ -159,12 +174,13 @@ export default function PersonScreen() {
                                 )
                                 }
                             </Text>
-
                         </View>
 
                         {/* person movies */}
                         <FilmList title={'Filmography'} hideSeeAll={true} data={personFilms} />
 
+                        {/* Spacing */}
+                        <View className="mb-28"></View> 
                     </ScrollView>
 
                 )

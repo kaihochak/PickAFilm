@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, Dimensions } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, TouchableWithoutFeedback, Dimensions, RefreshControl } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { XMarkIcon } from 'react-native-heroicons/outline'
@@ -24,6 +24,8 @@ export default function SearchScreen() {
 
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState([])
+    const [refreshing, setRefreshing] = useState(false);
+
 
     const handleSearch = search => {
         console.log('searching for', search);
@@ -46,9 +48,17 @@ export default function SearchScreen() {
 
     const handleTextDebounce = useCallback(debounce(handleSearch, 400), []);
 
+    // refresh control
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 800);
+    }, []);
+
     return (
 
-        <SafeAreaView className="flex-1" style={lightMode?styles.background:darkStyles.background}>
+        <SafeAreaView className="flex-1" style={lightMode ? styles.background : darkStyles.background}>
 
             {/* search input */}
             <View
@@ -85,6 +95,9 @@ export default function SearchScreen() {
                             showsVerticalScrollIndicator={false}
                             contentContainerStyle={{ paddingHorizontal: 15 }}
                             className="space-y-3"
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                            }
                         >
                             {/* <Text className="text-white font-semibold ml-1 ">Results ({results.length})</Text> */}
                             <View className="flex-row justify-between flex-wrap">
