@@ -99,7 +99,6 @@ export default function SearchScreen() {
                                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                             }
                         >
-                            {/* <Text className="text-white font-semibold ml-1 ">Results ({results.length})</Text> */}
                             <View className="flex-row justify-between flex-wrap">
                                 {
                                     results.map((item, index) => {

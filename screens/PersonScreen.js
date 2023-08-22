@@ -179,7 +179,7 @@ export default function PersonScreen() {
                         </View>
 
                         {/* person movies */}
-                        <FilmList title={'Filmography'} hideSeeAll={true} data={personFilms} />
+                        <FilmList title={'Filmography'} hideSeeAll={true} data={personFilms} lightMode={lightMode}/>
 
                         {/* Spacing */}
                         <View className="mb-28"></View>

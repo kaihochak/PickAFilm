@@ -6,7 +6,6 @@ import {
     Dimensions,
     Platform,
     Image,
-    useWindowDimensions,
     TouchableWithoutFeedback,
     RefreshControl,
 } from "react-native";
@@ -19,12 +18,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import Cast from "../components/cast";
 import FilmList from "../components/filmList";
 import Loading from "../components/loading";
-import { TabView, SceneMap } from 'react-native-tab-view';
 import {
     fetchFilmDetails,
     fetchCast,
     image500,
     fetchSimilarMovies,
+    fallbackMoviePoster,
 } from "../api/tmdb";
 
 var { width, height } = Dimensions.get("window");
@@ -46,7 +45,7 @@ export default function FilmScreen() {
 
     // call API
     useEffect(() => {
-        console.log(item);
+        console.log(item?.poster_path);
         getFilmDetails(item.id);
         getCast(item.id);
         getSimilarFilms(item.id);
@@ -131,9 +130,7 @@ export default function FilmScreen() {
                     >
                         <View>
                             <Image
-                                source={{
-                                    uri: image500(item.poster_path) || fallbackMoviePoster,
-                                }}
+                                source={ item?.poster_path ? {uri: image500(item.poster_path)} : fallbackMoviePoster }
                                 style={{ width: width, height: height * 0.55 }}
                             />
                             <LinearGradient

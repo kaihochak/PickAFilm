@@ -2,7 +2,7 @@ import { View, Text, TouchableWithoutFeedback, Dimensions, Image } from 'react-n
 import React from 'react';
 import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
-import { image500 } from '../api/tmdb';
+import { fallbackMoviePoster, image500 } from '../api/tmdb';
 import { darkStyles, styles } from '../theme';
 
 var { width, height } = Dimensions.get('window');
@@ -38,7 +38,7 @@ const FilmCard = ({ item, handleClick }) => {
     return (
         <TouchableWithoutFeedback onPress={() => handleClick(item)}>
             <Image
-                source={{ uri: image500(item.poster_path) }}
+                source={{ uri: image500(item.poster_path) } || fallbackMoviePoster}
                 style={{
                     width: width * 0.6,
                     height: height * 0.4

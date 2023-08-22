@@ -38,14 +38,14 @@ export default function Cast({ cast, navigation, lightMode }) {
                                 >
                                     <Image
                                         className="h-36 w-24 rounded-xl"
-                                        source={{ uri: image342(person?.profile_path || require("../assets/images/fallbackPersonImage.jpg")) }}
+                                        source={{ uri: image342(person?.profile_path)} || fallbackPersonImage }
                                     />
                                 </View>
                                 <Text className="text-s mt-1 pt-1" style={lightMode ? styles.paragraph.text : darkStyles.paragraph}>
-                                    {person?.character.length > 14 ? person?.character.slice(0, 14) + '...' : person?.character}
+                                    {person?.character.length > 10 ? person?.character.slice(0, 10) + '...' : person?.character}
                                 </Text>
                                 <Text className="text-xs mt-1" style={lightMode ? styles.paragraph.text : darkStyles.paragraph}>
-                                    {person?.original_name.length > 16 ? person?.original_name.slice(0, 16) + '...' : person?.original_name}
+                                    {person?.original_name.length > 12 ? person?.original_name.slice(0, 12) + '...' : person?.original_name}
                                 </Text>
                             </TouchableOpacity>
                         )
