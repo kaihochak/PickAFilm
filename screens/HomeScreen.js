@@ -82,7 +82,7 @@ export default function HomeScreen() {
         <View className="flex" style={lightMode ? styles.background : darkStyles.background} >
 
             {/* search bar and logo */}
-            <SafeAreaView className={baseMargin}>
+            <SafeAreaView >
                 <StatusBar style={lightMode ? "dark" : "light"} />
 
                 <View className="flex-row justify-between items-center mx-4 mb-3">
@@ -131,7 +131,7 @@ export default function HomeScreen() {
             {
                 // loading page
                 loading ? (
-                    <Loading />
+                    <Loading lightMode={lightMode}/>
                 ) : (
                     // film lists
                     <ScrollView
@@ -149,9 +149,6 @@ export default function HomeScreen() {
 
                         {/* Trending Films Carousel */}
                         <FilmList title="Trending" data={trending} lightMode={lightMode} />
-
-                        {/* Upcoming Films Carousel */}
-                        <FilmList title="Upcoming" data={upcoming} lightMode={lightMode} />
 
                         {/* Spacing */}
                         <View className="mb-28"></View>

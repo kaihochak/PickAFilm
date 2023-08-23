@@ -2,7 +2,7 @@ import { View, Text, TouchableWithoutFeedback, ScrollView, Dimensions, Image } f
 import React from 'react';
 import { darkStyles, styles } from '../theme';
 import { useNavigation } from '@react-navigation/native';
-import { fallbackMoviePoster, image185 } from '../api/tmdb';
+import { fallbackMoviePoster, image342 } from '../api/tmdb';
 
 var { width, height } = Dimensions.get('window');
 
@@ -44,7 +44,7 @@ export default function FilmList({ title, data, lightMode }) {
                             >
                                 <View className="space-y-2 mr-4">
                                     <Image
-                                        source={{ uri: image185(item.poster_path) } || fallbackMoviePoster}
+                                        source={item?.poster_path ? {uri: image342(item.poster_path)} : fallbackMoviePoster}
                                         className="rounded-3xl"
                                         style={{ width: width * 0.33, height: height * 0.22 }}
                                     />

@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { XMarkIcon } from 'react-native-heroicons/outline'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { fallbackMoviePoster, image185, searchFilms } from '../api/tmdb'
+import { fallbackMoviePoster, image185, image342, searchFilms } from '../api/tmdb'
 import { debounce } from 'lodash'
 import Loading from '../components/loading'
 import { darkStyles, styles } from '../theme'
@@ -85,7 +85,7 @@ export default function SearchScreen() {
             {
                 // loading page
                 loading ? (
-                    <Loading />
+                    <Loading lightMode={lightMode}/>
                 ) :
                     // results page
                     results.length > 0 ? (
@@ -108,7 +108,7 @@ export default function SearchScreen() {
                                                 onPress={() => handleClick(item)}>
                                                 <View className="space-y-2 mb-4">
                                                     <Image
-                                                        source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
+                                                        source={item?.poster_path ? { uri: image342(item.poster_path) } : fallbackMoviePoster}
                                                         className="rounded-3xl"
                                                         style={{ width: width * 0.44, height: height * 0.3 }}
                                                     />

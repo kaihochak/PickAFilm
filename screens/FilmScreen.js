@@ -45,7 +45,6 @@ export default function FilmScreen() {
 
     // call API
     useEffect(() => {
-        console.log(item?.poster_path);
         getFilmDetails(item.id);
         getCast(item.id);
         getSimilarFilms(item.id);
@@ -118,7 +117,7 @@ export default function FilmScreen() {
             {/* loading page */}
             {
                 loading ? (
-                    <Loading />
+                    <Loading lightMode={lightMode}/>
                 ) : (
 
                     <ScrollView

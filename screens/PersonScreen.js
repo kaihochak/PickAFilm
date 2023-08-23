@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ArrowLeftIcon } from 'react-native-heroicons/outline'
 import { SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { fallbackPersonImage, fetchPersonDetails, fetchPersonFilms, image185, image342, image500 } from '../api/tmdb';
+import { fallbackPersonImage, fetchPersonDetails, fetchPersonFilms, image500 } from '../api/tmdb';
 import Loading from '../components/loading';
 import { darkStyles, styles } from '../theme';
 import FilmList from '../components/filmList';
@@ -91,7 +91,7 @@ export default function PersonScreen() {
             {/* person details */}
             {
                 loading ? (
-                    <Loading />
+                    <Loading lightMode={lightMode}/>
                 ) : (
                     <ScrollView
                         showsVerticalScrollIndicator={false}
@@ -111,7 +111,7 @@ export default function PersonScreen() {
                         >
                             <Image
                                 className="overflow-hidden rounded-xl border-neutral-300 border-1"
-                                source={{ uri: image342(person?.profile_path) || require('../assets/images/fallbackPersonImage.jpg') }}
+                                source={person?.profile_path ? { uri: image500(person?.profile_path) } : fallbackPersonImage}
                                 style={{ height: height * 0.5, width: width * 0.75 }}
                             />
                         </View>

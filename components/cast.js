@@ -38,7 +38,7 @@ export default function Cast({ cast, navigation, lightMode }) {
                                 >
                                     <Image
                                         className="h-36 w-24 rounded-xl"
-                                        source={{ uri: image342(person?.profile_path)} || fallbackPersonImage }
+                                        source={person?.profile_path ? { uri: image342(person?.profile_path) } : fallbackPersonImage}
                                     />
                                 </View>
                                 <Text className="text-s mt-1 pt-1" style={lightMode ? styles.paragraph.text : darkStyles.paragraph}>
