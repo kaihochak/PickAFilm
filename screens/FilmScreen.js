@@ -42,7 +42,6 @@ export default function FilmScreen() {
     const [filmDetails, setFilmDetails] = useState({});
     const [refreshing, setRefreshing] = useState(false);
 
-
     // call API
     useEffect(() => {
         getFilmDetails(item.id);

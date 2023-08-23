@@ -15,6 +15,7 @@ export default function Watchlist({ data, lightMode }) {
             isLightMode: lightMode
         });
     }
+    
     return (
         <View className="mb-8">
             <Text className="font-bold text-xl mx-4 mb-5" style={lightMode?styles.text:darkStyles.text}>

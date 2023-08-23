@@ -26,7 +26,6 @@ export default function SearchScreen() {
     const [results, setResults] = useState([])
     const [refreshing, setRefreshing] = useState(false);
 
-
     const handleSearch = search => {
         console.log('searching for', search);
         if (search && search.length > 0) {
@@ -62,14 +61,16 @@ export default function SearchScreen() {
 
             {/* search input */}
             <View
-                className="mx-4 mb-3 flex-row justify-between items-center border border-neutral-500 rounded-full" >
-
+                className="mx-4 mb-3 flex-row justify-between items-center border rounded-full" 
+                style={lightMode ? styles.border : darkStyles.border}
+            >
                 {/* search bar */}
                 <TextInput
                     onChangeText={handleTextDebounce}
                     placeholder="Search Films"
-                    placeholderTextColor={'lightgray'}
-                    className="pb-1 pl-6 flex-1 text-base font-semibold text-white tracking-wider"
+                    placeholderTextColor={lightMode ? styles.paragraph.color : darkStyles.paragraph.color}
+                    className="pb-1 pl-6 flex-1 text-base font-semibold tracking-wider"
+                    style={lightMode ? styles.text : darkStyles.text}
                 />
 
                 {/* cancel button*/}

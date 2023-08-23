@@ -6,15 +6,17 @@ export const theme = {
 }
 
 export const darkStyles = {
+    border: {borderColor: theme.text},
     background: {backgroundColor: theme.background},
-    text: {color: theme.text},
     title: {color: theme.title},
+    text: {color: theme.text},
     paragraph: {color: theme.paragraph}
 }
 
 export const styles = {
+    border: {borderColor: '#283339'},
     background: {backgroundColor: '#ebebeb'},
-    text: {color: '#283339'},
     title: {color: '#288884'},
+    text: {color: '#283339'},
     paragraph: {color: '#374452'}
 }
