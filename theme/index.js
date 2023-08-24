@@ -1,20 +1,13 @@
-export const theme = {
-    background: '#252F35',
-    text: 'white',
-    title: '#58CECA',
-    paragraph: '#dbe1e7'
-}
-
 export const darkStyles = {
-    border: {borderColor: theme.text},
-    background: {backgroundColor: theme.background},
-    title: {color: theme.title},
-    text: {color: theme.text},
-    paragraph: {color: theme.paragraph}
+    border: {borderColor: '#35454c' },
+    background: {backgroundColor:'#252F35'},
+    title: {color: '#58CECA'},
+    text: {color: 'white'},
+    paragraph: {color: '#dbe1e7'}
 }
 
 export const styles = {
-    border: {borderColor: '#283339'},
+    border: {borderColor: '#c4c4c4'},
     background: {backgroundColor: '#ebebeb'},
     title: {color: '#288884'},
     text: {color: '#283339'},

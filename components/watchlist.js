@@ -6,6 +6,7 @@ import { fallbackMoviePoster, image500 } from '../api/tmdb';
 import { darkStyles, styles } from '../theme';
 
 var { width, height } = Dimensions.get('window');
+var borderColor;
 
 export default function Watchlist({ data, lightMode }) {
     const navigation = useNavigation();
@@ -15,19 +16,22 @@ export default function Watchlist({ data, lightMode }) {
             isLightMode: lightMode
         });
     }
-    
+    borderColor = lightMode ? styles.border.borderColor : darkStyles.border.borderColor;
+
     return (
-        <View className="mb-8">
-            <Text className="font-bold text-xl mx-4 mb-5" style={lightMode?styles.text:darkStyles.text}>
+        <View className="mb-4">
+            <Text 
+                className="font-bold text-xl mx-4 mb-5" 
+                style={lightMode?styles.text:darkStyles.text}>
                 Watchlist
             </Text>
             <Carousel
                 data={data}
                 renderItem={({ item }) => <FilmCard item={item} handleClick={handleClick} />}
-                firstItem={1}
-                inactiveSlideOpacity={0.5}
+                firstItem={2}
+                inactiveSlideOpacity={0.8}
                 sliderWidth={width}
-                itemWidth={width * 0.62}
+                itemWidth={width * 0.5}
                 slideStyle={{ display: 'flex', alignItems: 'center' }}
             />
         </View>
@@ -35,16 +39,21 @@ export default function Watchlist({ data, lightMode }) {
 }
 
 
+
 const FilmCard = ({ item, handleClick }) => {
+
+    console.log(borderColor);
+
     return (
         <TouchableWithoutFeedback onPress={() => handleClick(item)}>
             <Image
                 source={item?.poster_path ? {uri: image500(item.poster_path)} : fallbackMoviePoster}
                 style={{
-                    width: width * 0.6,
-                    height: height * 0.4
+                    width: width * 0.5,
+                    height: height * 0.34,
+                    borderColor: borderColor
                 }}
-                className="rounded-3xl"
+                className="rounded-xl border-[1px]"
             />
         </TouchableWithoutFeedback>
     )

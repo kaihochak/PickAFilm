@@ -16,11 +16,13 @@ export default function FilmList({ title, data, lightMode }) {
         });
     }
 
+    const borderColor = lightMode ? styles.border.borderColor : darkStyles.border.borderColor;
+
     return (
-        <View className="mb-8 space-y-4">
+        <View className="mb-3 space-y-3">
 
             {/* Title */}
-            <View className="flex-row justify-between items-center mx-4 mb-1">
+            <View className="flex-row justify-between items-center mx-4 ">
                 <Text className="font-bold text-xl">
                     <Text style={lightMode ? styles.text : darkStyles.text}>
                         {title}
@@ -32,7 +34,7 @@ export default function FilmList({ title, data, lightMode }) {
             <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ paddingLeft: 15 }}
+                contentContainerStyle={{ paddingLeft: 10 }}
             >
                 {
                     data.map((item, index) => {
@@ -42,14 +44,28 @@ export default function FilmList({ title, data, lightMode }) {
                                 key={index}
                                 onPress={() => handleClick(item)} // bring to filmScreen
                             >
-                                <View className="space-y-2 mr-4">
+                                <View className="space-y-1 mr-2">
                                     <Image
-                                        source={item?.poster_path ? {uri: image342(item.poster_path)} : fallbackMoviePoster}
-                                        className="rounded-3xl"
-                                        style={{ width: width * 0.33, height: height * 0.22 }}
+                                        source={item?.poster_path ? { uri: image342(item.poster_path) } : fallbackMoviePoster}
+                                        className="rounded border-[1px]"
+                                        style={{
+                                            width: width * 0.26,
+                                            height: height * 0.18,
+                                            borderColor: borderColor
+                                        }}
                                     />
-                                    <Text className="ml-1 text-sm font-medium" style={lightMode ? styles.paragraph : darkStyles.paragraph}>
-                                        {item.title.length > 14 ? item.title.slice(0, 14) + '...' : item.title}
+                                    <Text
+                                        className="ml-1 text-[10px] font-light"
+                                        style={lightMode ? styles.paragraph : darkStyles.paragraph}
+                                    >
+                                        {item.title.length > 15 ? item.title.slice(0, 15) + '...' : item.title}
+                                    </Text>
+
+                                    <Text
+                                        className="ml-1 text-[10px] font-light"
+                                        style={lightMode ? styles.paragraph : darkStyles.paragraph}
+                                    >
+                                        5/10
                                     </Text>
                                 </View>
                             </TouchableWithoutFeedback>
