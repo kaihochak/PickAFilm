@@ -60,13 +60,6 @@ export default function FilmList({ title, data, lightMode }) {
                                     >
                                         {item.title.length > 15 ? item.title.slice(0, 15) + '...' : item.title}
                                     </Text>
-
-                                    <Text
-                                        className="ml-1 text-[10px] font-light"
-                                        style={lightMode ? styles.paragraph : darkStyles.paragraph}
-                                    >
-                                        5/10
-                                    </Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         )

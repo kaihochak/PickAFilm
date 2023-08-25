@@ -19,7 +19,6 @@ export default function HomeScreen() {
 
     const navigation = useNavigation();
     const [lightMode, setLightMode] = useState(false);
-    const [watchlist, setWatchlist] = useState([]); // [
     const [trending, setTrending] = useState([]);
     const [topRated, setTopRated] = useState([]);
     const [upcoming, setUpcoming] = useState([]);
@@ -28,18 +27,10 @@ export default function HomeScreen() {
 
     // call api, fetch data
     useEffect(() => {
-        getWatchlist();
         getTrending();
         getTopRated();
         getUpcoming();
     }, []);
-
-    // fetch data for watchlist films
-    const getWatchlist = async () => {
-        const data = await fetchWatchlist();
-        if (data && data.results) setWatchlist(data.results);
-        setLoading(false);
-    }
 
     // fetch data for trending films
     const getTrending = async () => {
@@ -141,14 +132,14 @@ export default function HomeScreen() {
                             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                         }
                     >
-                        {/* Watchlist Films Carousel */}
-                        <Watchlist data={watchlist} lightMode={lightMode} />
+                        {/* Trending Films Carousel */}
+                        <Watchlist data={trending} lightMode={lightMode} />
 
                         {/* Top Rated Films Carousel */}
                         <FilmList title="Top Rated" data={topRated} lightMode={lightMode} />
 
                         {/* Trending Films Carousel */}
-                        <FilmList title="Trending" data={trending} lightMode={lightMode} />
+                        <FilmList title="Upcoming" data={upcoming} lightMode={lightMode} />
 
                         {/* Spacing */}
                         <View className="mb-28"></View>

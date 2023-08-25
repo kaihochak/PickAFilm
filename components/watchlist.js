@@ -12,7 +12,7 @@ export default function Watchlist({ data, lightMode }) {
     const navigation = useNavigation();
     const handleClick = (item) => {
         navigation.navigate('Film', {
-            item: item, 
+            item: item,
             isLightMode: lightMode
         });
     }
@@ -20,10 +20,10 @@ export default function Watchlist({ data, lightMode }) {
 
     return (
         <View className="mb-4">
-            <Text 
-                className="font-bold text-xl mx-4 mb-5" 
-                style={lightMode?styles.text:darkStyles.text}>
-                Watchlist
+            <Text
+                className="font-bold text-xl mx-4 mb-5"
+                style={lightMode ? styles.text : darkStyles.text}>
+                Trending
             </Text>
             <Carousel
                 data={data}
@@ -42,12 +42,13 @@ export default function Watchlist({ data, lightMode }) {
 
 const FilmCard = ({ item, handleClick }) => {
 
-    console.log(borderColor);
-
     return (
-        <TouchableWithoutFeedback onPress={() => handleClick(item)}>
+        <TouchableWithoutFeedback
+            key={item.id}
+            onPress={() => handleClick(item)}>
+
             <Image
-                source={item?.poster_path ? {uri: image500(item.poster_path)} : fallbackMoviePoster}
+                source={item?.poster_path ? { uri: image500(item.poster_path) } : fallbackMoviePoster}
                 style={{
                     width: width * 0.5,
                     height: height * 0.34,

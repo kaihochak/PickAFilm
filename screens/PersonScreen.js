@@ -103,16 +103,16 @@ export default function PersonScreen() {
                         <View
                             className="flex-row justify-center items-center pt-10 pb-4"
                             style={{
-                                shadowColor: "#ebebeb",
+                                shadowColor: "gray",
                                 shadowRadius: 20,
                                 shadowOffset: { width: 1, height: 2},
-                                shadowOpacity: 0.3,
+                                shadowOpacity: 0.1,
                             }}
                         >
                             <Image
-                                className="overflow-hidden rounded-xl border-neutral-300 border-1"
+                                className="overflow-hidden rounded-xl border-neutral-500 border-[0.5px]"
                                 source={person?.profile_path ? { uri: image500(person?.profile_path) } : fallbackPersonImage}
-                                style={{ height: height * 0.5, width: width * 0.75 }}
+                                style={{ height: height * 0.4, width: width * 0.65 }}
                             />
                         </View>
 

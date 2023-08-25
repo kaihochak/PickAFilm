@@ -101,14 +101,8 @@ export default function FilmScreen() {
                         </Text>
                     </TouchableWithoutFeedback>
 
-                    {/* Add Button */}
-                    <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                        <PlusIcon
-                            size="30"
-                            strokeWidth={3}
-                            style={lightMode ? styles.text : darkStyles.text}
-                        />
-                    </TouchableOpacity>
+                    {/* Spacing */}
+                    <View className="w-10"></View>
 
                 </View>
             </SafeAreaView>
@@ -129,7 +123,7 @@ export default function FilmScreen() {
                         <View>
                             <Image
                                 source={ item?.poster_path ? {uri: image500(item.poster_path)} : fallbackMoviePoster }
-                                style={{ width: width, height: height * 0.55 }}
+                                style={{ width: width, height: height * 0.65 }}
                             />
                             <LinearGradient
                                 colors={["transparent", lightMode ? styles.background.backgroundColor : darkStyles.background.backgroundColor]}
@@ -188,7 +182,9 @@ export default function FilmScreen() {
                                 {filmDetails?.genres?.map((genre, index) => {
                                     let lastOne = index + 1 == filmDetails.genres.length;
                                     return (
-                                        <Text className="font-light text-sm text-center">
+                                        <Text
+                                            key={index} 
+                                            className="font-light text-sm text-center">
                                             {lightMode ? (
                                                 <Text key={index} style={styles.paragraph} >
                                                     {genre?.name}{lastOne ? null : " /"}

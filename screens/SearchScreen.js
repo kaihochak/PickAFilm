@@ -113,7 +113,10 @@ export default function SearchScreen() {
                                                         className="rounded-3xl"
                                                         style={{ width: width * 0.44, height: height * 0.3 }}
                                                     />
-                                                    <Text className="text-gray-300 ml-1">
+                                                    <Text 
+                                                        className="ml-"
+                                                        style={lightMode?styles.text:darkStyles.text}
+                                                    >
                                                         {
                                                             item.title.length > 22 ? item.title.slice(0, 22) + '...' : item.title
                                                         }
