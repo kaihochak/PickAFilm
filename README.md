@@ -1,4 +1,3 @@
-```
 # PIckAFilm
 
 ## Description
@@ -40,5 +39,3 @@ While contributions are appreciated, please note that this project is primarily 
 
 - GitHub: [kaihochak](https://github.com/kaihochak)
 - Portfolio: [kaihochak.github.io](https://kaihochak.github.io/)
-
-```
