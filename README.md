@@ -17,6 +17,7 @@ Since the app is for demonstration purposes only and is not deployed, follow the
 To understand how to use the app and its features, refer to the GIFs provided in the repository. The app includes the following screens:
 
 - HomeScreen
+![Alt Text](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true)
 
 - FilmScreen
 
