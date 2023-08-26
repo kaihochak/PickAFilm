@@ -18,7 +18,7 @@ To understand how to use the app and its features, refer to the GIFs provided in
 
 - HomeScreen
 
-<img src="[IMAGE_URL](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true)" alt="Alt Text" width="600">
+<img src="https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true" alt="Alt Text" width="600">
 
 ![HomeScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true)
 
