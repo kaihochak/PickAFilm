@@ -22,11 +22,11 @@ To understand how to use the app and its features, refer to the GIFs provided in
 
 - FilmScreen
 
-![FilmScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true)
+![FilmScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745%203.gif?raw=true)
 
 - PersonScreen
 
-![PersonScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true)
+![PersonScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745%204.gif?raw=true)
 
 - SearchScreen
 
@@ -35,7 +35,7 @@ To understand how to use the app and its features, refer to the GIFs provided in
 The app also supports light mode.
 
 
-![lightMode](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true)
+![lightMode](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693036385.gif?raw=true)
 
 ## Contributing
 
