@@ -25,6 +25,7 @@ To understand how to use the app and its features, refer to the GIFs provided in
 - SearchScreen
 
 The app also supports light mode.
+![Alt Text](https://drive.google.com/file/d/1FQ-W0lmT7CF0OOpCC3tPLmnkjKLVdf4s/view?usp=sharing)
 
 ## Contributing
 
