@@ -1,8 +1,8 @@
-# PIckAFilm
+# PickAFilm
 
 ## Description
 
-PIckAFilm is an app designed to help users explore film information and select their preferred films. This app serves as a prototype for a future project that will incorporate more advanced features.
+PickAFilm is an app designed to help users explore film information and select their preferred films. This app serves as a prototype for a future project that will incorporate more advanced features.
 
 ## Installation
 
