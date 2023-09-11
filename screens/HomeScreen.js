@@ -3,14 +3,15 @@ import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { Bars3Icon } from 'react-native-heroicons/solid';
 import { MoonIcon, SunIcon } from 'react-native-heroicons/solid';
 import { styles, darkStyles } from '../theme';
-import Watchlist from '../components/watchlist';
-import FilmList from '../components/filmList';
+import MyEvents from '../components/myEvents';
 import { useState } from 'react';
 import { fetchWatchlist, fetchTopRated, fetchTrending, fetchUpcoming } from '../api/tmdb'
 import Loading from '../components/loading';
 import { useNavigation } from '@react-navigation/native';
+import EventList from '../components/eventList';
 
 const ios = Platform.OS === 'ios';
 const baseMargin = ios ? 'mb-2' : 'mb-3';
@@ -18,7 +19,7 @@ const baseMargin = ios ? 'mb-2' : 'mb-3';
 export default function HomeScreen() {
 
     const navigation = useNavigation();
-    const [lightMode, setLightMode] = useState(false);
+    const [lightMode, setLightMode] = useState(true);
     const [trending, setTrending] = useState([]);
     const [topRated, setTopRated] = useState([]);
     const [upcoming, setUpcoming] = useState([]);
@@ -76,27 +77,27 @@ export default function HomeScreen() {
             <SafeAreaView >
                 <StatusBar style={lightMode ? "dark" : "light"} />
 
-                <View className="flex-row justify-between items-center mx-4 mb-3">
+                <View className="flex-row justify-between items-center px-8 pt-2 pb-6">
+                    {/* Logo */}
+                    <Text className="text-xl font-semibold leading-5"
+                        style={lightMode ? styles.text : darkStyles.text}
+                    >
+                        <Text style={lightMode ? styles.title : darkStyles.title}>Pick{'\n'}</Text>
+                        <Text style={lightMode ? styles.text : darkStyles.text}>A{'\n'}</Text>
+                        <Text style={lightMode ? styles.text : darkStyles.text}>Film</Text>
+                    </Text>
 
-                    {/* Search */}
-                    <TouchableOpacity onPress={goToSearch}>
-                        <MagnifyingGlassIcon
-                            size="30"
+                    {/* Menu */}
+                    <TouchableOpacity onPress={ goToSearch }>
+                        <Bars3Icon
+                            size="45"
                             strokeWidth={2}
                             color={lightMode ? styles.text.color : darkStyles.text.color}
                         />
                     </TouchableOpacity>
 
-                    {/* Logo */}
-                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Home')}>
-                        <Text className="text-3xl font-bold" >
-                            <Text style={lightMode ? styles.title : darkStyles.title}>Pick</Text>
-                            <Text style={lightMode ? styles.text : darkStyles.text}>AFilm</Text>
-                        </Text>
-                    </TouchableWithoutFeedback>
-
                     {/* lightmode button */}
-                    {lightMode ? (
+                    {/* {lightMode ? (
                         <TouchableOpacity onPress={() => setLightMode(!lightMode)}>
                             <MoonIcon
                                 size="30"
@@ -113,8 +114,7 @@ export default function HomeScreen() {
                             />
                         </TouchableOpacity>
                     )
-                    }
-
+                    } */}
                 </View>
             </SafeAreaView>
 
@@ -122,7 +122,7 @@ export default function HomeScreen() {
             {
                 // loading page
                 loading ? (
-                    <Loading lightMode={lightMode}/>
+                    <Loading lightMode={lightMode} />
                 ) : (
                     // film lists
                     <ScrollView
@@ -133,16 +133,16 @@ export default function HomeScreen() {
                         }
                     >
                         {/* Trending Films Carousel */}
-                        <Watchlist data={trending} lightMode={lightMode} />
+                        <MyEvents data={trending} lightMode={lightMode} />
 
                         {/* Top Rated Films Carousel */}
-                        <FilmList title="Top Rated" data={topRated} lightMode={lightMode} />
+                        <EventList title="What's Nearby" data={topRated} lightMode={lightMode} />
 
                         {/* Trending Films Carousel */}
-                        <FilmList title="Upcoming" data={upcoming} lightMode={lightMode} />
+                        <EventList title="Discover" data={upcoming} lightMode={lightMode} />
 
                         {/* Spacing */}
-                        <View className="mb-28"></View>
+                        <View className="mb-48"></View>
 
                     </ScrollView>
                 )
