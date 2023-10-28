@@ -71,7 +71,7 @@ export default function HomeScreen() {
     }, []);
 
     return (
-        <View className="flex" style={lightMode ? styles.background : darkStyles.background} >
+        <View className="flex px-4" style={lightMode ? styles.background : darkStyles.background} >
 
             {/* search bar and logo */}
             <SafeAreaView >

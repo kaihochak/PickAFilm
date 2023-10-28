@@ -4,7 +4,7 @@ import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image342, image500 } from '../api/tmdb';
 import { darkStyles, styles } from '../theme';
-import { PlusIcon } from 'react-native-heroicons/outline';
+import { PlusIcon, PlusCircleIcon } from 'react-native-heroicons/outline';
 import Loading from './loading';
 
 var { width, height } = Dimensions.get('window');
@@ -29,8 +29,7 @@ export default function MyEvents({ data, lightMode }) {
     return (
         <View className="mb-4 space-y-5">
 
-
-            <View className="flex-row justify-between items-center border-y px-8 py-4" style={{ borderColor: borderColor }}>
+            <View className="flex-row justify-between items-center border-b py-4" style={{ borderColor: borderColor }}>
                 {/* Title */}
                 <Text className="font-base text-2xl" style={{ color: textColor }}>
                     My Events
@@ -47,59 +46,63 @@ export default function MyEvents({ data, lightMode }) {
                     <Loading lightMode={lightMode} />
                 ) :
                     <ScrollView
-                        horizontal={true}
+                        horizontal={false}
                         showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ paddingLeft: 10 }}
+                        contentContainerStyle={{ paddingHorizontal: 2 }}
                     >
                         {
-                            data.map((item, index) => {
+                            // display latest 2 events
+                            data.slice(0,2).map((item, index) => {
 
                                 return (
                                     <TouchableWithoutFeedback
                                         key={index}
                                         onPress={() => handleClick(item)} // bring to filmScreen
                                     >
-                                        <View className="space-y-1 mr-2 ml-4">
+                                        <View className="flex flex-row gap-8 pb-8">
                                             <Image
                                                 source={item?.poster_path ? { uri: image342(item.poster_path) } : fallbackMoviePoster}
-                                                className="rounded border-[1px]"
+                                                className="rounded-xl border-[1px]]"
                                                 style={{
-                                                    width: width * 0.80,
-                                                    height: height * 0.25,
+                                                    width: width * 0.30,
+                                                    height: height * 0.15,
                                                     borderColor: borderColor
                                                 }}
                                             />
-                                            {/* Title */}
-                                            <View className="flex-row justify-between items-center px-1 pt-2">
-                                                <Text
-                                                    className="text-[18px] font-normal"
-                                                    style={{ color: textColor }}
-                                                >
-                                                    {item.title.length > 14 ? item.title.slice(0, 14) + '...' : item.title}
-                                                </Text>
-                                                <View className="border rounded-full px-3 py-1">
+                                            {/* Info */}
+                                            <View>
+                                                {/* Title */}
+                                                <View className="flex-row justify-between items-center pt-2">
                                                     <Text
-                                                        className="font-light text-[10px]"
-                                                        style={{ color: textColor, borderColor: textColor }}
+                                                        className="text-[18px] font-normal"
+                                                        style={{ color: textColor }}
                                                     >
-                                                        RSVP
+                                                        {item.title.length > 14 ? item.title.slice(0, 14) + '...' : item.title}
+                                                    </Text>
+                                                    <View className="border rounded-full px-3 py-1">
+                                                        <Text
+                                                            className="font-light text-[10px]"
+                                                            style={{ color: textColor, borderColor: textColor }}
+                                                        >
+                                                            RSVP
+                                                        </Text>
+                                                    </View>
+                                                </View>
+                                                {/* Details */}
+                                                <View className="flex-row justify-between items-center ">
+                                                    <Text
+                                                        className="text-[15px] font-light"
+                                                        style={{ color: paragraphColor }}
+                                                    >
+                                                        Kai's House
+                                                    </Text>
+                                                    <Text
+                                                        className="text-[15px] font-light"
+                                                        style={{ color: paragraphColor }}
+                                                    >
+                                                        2023.08.08{"   "} 8:00 PM
                                                     </Text>
                                                 </View>
-                                            </View>
-                                            {/* info */}
-                                            <View className="flex-row justify-between items-center p-1">
-                                                <Text
-                                                    className="text-[15px] font-light"
-                                                    style={{ color: paragraphColor }}
-                                                >
-                                                    Kai's House
-                                                </Text>
-                                                <Text
-                                                    className="text-[15px] font-light"
-                                                    style={{ color: paragraphColor }}
-                                                >
-                                                    2023.08.08{"   "} 8:00 PM
-                                                </Text>
                                             </View>
 
                                         </View>
@@ -107,6 +110,13 @@ export default function MyEvents({ data, lightMode }) {
                                 )
                             })
                         }
+                        
+                        {/* Create Event Button */}
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateEvent')}>
+                            <View className="flex-row justify-center items-center px-8 py-4">
+                                <PlusCircleIcon size="45" strokeWidth={1} color={textColor} />
+                            </View>
+                        </TouchableWithoutFeedback>
                     </ScrollView>
             }
 
