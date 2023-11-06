@@ -20,21 +20,24 @@ To understand how to use the app and its features, refer to the GIFs provided in
 
 <img src="https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true" alt="HomeScreen" width="300">
 
+![HomeScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745.gif?raw=true)
+
 - FilmScreen
 
-<img src="https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745%203.gif?raw=true" alt="FilmScreen" width="300">
+![FilmScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745%203.gif?raw=true)
 
 - PersonScreen
 
-<img src="https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745%204.gif?raw=true" alt="PersonScreen" width="300">
+![PersonScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745%204.gif?raw=true)
 
 - SearchScreen
 
-<img src="https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745%202.gif?raw=true" alt="SearchScreen" width="300">
+![SearchScreen](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693035745%202.gif?raw=true)
 
 The app also supports light mode.
 
-<img src="https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693036385.gif?raw=true" alt="lightMode" width="300">
+
+![lightMode](https://github.com/kaihochak/PickAFilm/blob/master/assets/images/RPReplay_Final1693036385.gif?raw=true)
 
 ## Contributing
 
