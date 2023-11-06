@@ -1,4 +1,4 @@
-import { View, Text, TouchableWithoutFeedback, Dimensions, Image } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, ScrollView, Dimensions, Image } from 'react-native';
 import React, { useState } from 'react';
 import { darkStyles, styles } from '../theme';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +18,7 @@ export default function EventList({ title, data, lightMode }) {
     }
 
     const [loading, setLoading] = useState(false);
+    // const [results, setResults] = useState([]);
     const [showAll, setShowAll] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('All'); // Initialize with 'All'
     const dataToDisplay = showAll ? data : data.slice(0, 4);
@@ -45,7 +46,7 @@ export default function EventList({ title, data, lightMode }) {
             </View>
 
             {/* Filter buttons */}
-            <View className="flex-row px-4 pt-2">
+            <View className="flex-row px-4">
                 <FilterButton title="All" onPress={() => setSelectedCategory('All')}
                     isSelected={selectedCategory === 'All'} />
                 <FilterButton title="Film" onPress={() => setSelectedCategory('Film')}
@@ -95,7 +96,7 @@ export default function EventList({ title, data, lightMode }) {
                                                 </Text>
                                                 <View className="border rounded-full px-3 py-1">
                                                     <Text
-                                                        className="font-light text-[10px]"
+                                                        className="font-base text-[10px]"
                                                         style={{ color: textColor, borderColor: textColor }}
                                                     >
                                                         RSVP
