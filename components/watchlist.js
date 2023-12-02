@@ -4,13 +4,11 @@ import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image500 } from '../api/tmdb';
 import { darkStyles, styles } from '../theme';
-import { PlusIcon } from 'react-native-heroicons/outline';
-
 
 var { width, height } = Dimensions.get('window');
 var borderColor;
 
-export default function MyEvents({ data, lightMode }) {
+export default function Watchlist({ data, lightMode }) {
     const navigation = useNavigation();
     const handleClick = (item) => {
         navigation.navigate('Film', {
@@ -18,23 +16,15 @@ export default function MyEvents({ data, lightMode }) {
             isLightMode: lightMode
         });
     }
-
-    // set color
     borderColor = lightMode ? styles.border.borderColor : darkStyles.border.borderColor;
-    textColor = lightMode ? styles.text.color : darkStyles.text.color;
 
     return (
         <View className="mb-4">
-            <View className="flex-row justify-between items-center border-y px-8 py-4" style={{borderColor: borderColor}}>
-                {/* Title */}
-                <Text className="font-base text-2xl" style={{color: textColor}}>
-                    My Events
-                </Text>
-                {/* Create Event */}
-                <TouchableWithoutFeedback onPress={() => navigation.navigate('CreateEvent')}>
-                    <PlusIcon size="30" strokeWidth={2} color={textColor}/>
-                </TouchableWithoutFeedback>
-            </View>
+            <Text
+                className="font-bold text-xl mx-4 mb-5"
+                style={lightMode ? styles.text : darkStyles.text}>
+                Trending
+            </Text>
             <Carousel
                 data={data}
                 renderItem={({ item }) => <FilmCard item={item} handleClick={handleClick} />}
@@ -48,12 +38,15 @@ export default function MyEvents({ data, lightMode }) {
     )
 }
 
+
+
 const FilmCard = ({ item, handleClick }) => {
 
     return (
         <TouchableWithoutFeedback
             key={item.id}
             onPress={() => handleClick(item)}>
+
             <Image
                 source={item?.poster_path ? { uri: image500(item.poster_path) } : fallbackMoviePoster}
                 style={{
@@ -65,5 +58,4 @@ const FilmCard = ({ item, handleClick }) => {
             />
         </TouchableWithoutFeedback>
     )
-    
 }
