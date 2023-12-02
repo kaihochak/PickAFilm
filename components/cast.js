@@ -14,6 +14,7 @@ export default function Cast({ cast, navigation, lightMode }) {
         });
     }
 
+
     return (
         <View className="my-6">
             {/* Title */}
